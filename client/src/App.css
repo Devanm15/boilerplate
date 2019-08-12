@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
@@ -13,8 +13,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: Left;
+  justify-content: left;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -31,3 +31,13 @@
     transform: rotate(360deg);
   }
 }
+
+.Menu {
+  text-align: right;
+  /* position: fixed; */
+  /* margin-top: -5vh; */
+}
+h1 {
+  text-align: left;
+}
+

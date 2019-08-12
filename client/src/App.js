@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
+import "antd/dist/antd.css";
+import  {Menu} from 'antd';
+
 
 class App extends Component {
   constructor(props) {
@@ -26,10 +29,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>{ this.state.message }</h1>
-        <button onClick={this.fetchData} >
-          Fetch Data
-        </button>        
+        <h1>Earth Medicine App</h1>
+        <div className='Menu'>
+        <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+        <Menu.Item key="mail">
+         
+          Login | Register
+        </Menu.Item>
+        <Menu.Item key="app" disabled>
+        </Menu.Item>
+        </Menu>
+        
+        </div>
+        
+        
+        {/* <button onClick={this.fetchData} > */}
+          {/* Fetch Data */}
+        {/* </button>    */}    
       </div>
     );
   }
