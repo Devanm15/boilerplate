@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 import "antd/dist/antd.css";
-import  {Menu} from 'antd';
+import  {Menu, Row, Col, Button} from 'antd';
+import Map from './Map.js';
+
+
 
 
 class App extends Component {
@@ -25,24 +28,48 @@ class App extends Component {
       });
     }) 
   }
+  setLocation = locationObj => {
+    const lat = locationObj.mapPosition.lat;
+    const lng = locationObj.mapPosition.lng;
+    const area = locationObj.area;
+    const state = locationObj.state;
+    this.setState({
+      display_lat: lat,
+      display_long: lng,
+      map_city: area,
+      map_state: state
+    });
+  }
 
   render() {
     return (
       <div className="App">
-        <h1>Earth Medicine App</h1>
         <div className='Menu'>
-        <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-        <Menu.Item key="mail">
-         
+          <Row> <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+          <Col span={12}><h1>Earth Medicine App</h1></Col>
+          <Col span={12}>
+           <Menu.Item key="mail">
           Login | Register
-        </Menu.Item>
-        <Menu.Item key="app" disabled>
-        </Menu.Item>
-        </Menu>
+          </Menu.Item>
+          <Menu.Item key="app" disabled>
+          </Menu.Item></Col>
+          </Menu>
+         </Row>
+       </div>
+       <Map
+              google={this.props.google}
+              center={{
+                lat: 49,
+                lng: -123
+              }}
+              height="70vh"
+              zoom={2}
+              setLocation={this.setLocation}
+            />
         
-        </div>
-        
-        
+        <ul><Button>Discover Medicinal Plants</Button></ul>
+        <ul><Button>Discover Medicinal Culture</Button></ul>
+        <ul><Button>Discover Endangered Plant Species</Button></ul>
         {/* <button onClick={this.fetchData} > */}
           {/* Fetch Data */}
         {/* </button>    */}    

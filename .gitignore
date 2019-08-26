@@ -1,4 +1,4 @@
-package.json
+package-lock.json
 *.rbc
 capybara-*.html
 .rspec
