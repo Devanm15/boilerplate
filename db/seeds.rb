@@ -28,9 +28,27 @@ Culture.create!([{
     description: "Still collecting resources at this time."
 }])
 
+Location.create!([{ 
+    latitude:66.616223,
+    longitude:-94.641224
+},
+{ 
+    latitude:35.889202,
+    longitude:-109.637477
+},
+{ 
+    latitude:54.084000,
+    longitude:-2.620073
+    
+},
+{ 
+    latitude:69.956541,
+    longitude:25.190607
+},
+{ 
+    latitude:-1.734690,
+    longitude:16.304982
+}])
     p "Created #{Culture.count} cultures"
-# Culture.create(name:"Navajo"  description: "Still collecting resources at this time.")
-# Culture.create(name:"Celtic"  description: "Still collecting resources at this time.")
-# Culture.create(name:"Celtic"  description: "Still collecting resources at this time.")
-# Culture.create(name:"Saami" description: "Still collecting resources at this time.")
-# Culture.create(name:"Pigmy" description: "Still collecting resources at this time.")
+    p "Created #{Location.count} cultures"
+    
