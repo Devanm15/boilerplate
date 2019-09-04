@@ -40,12 +40,6 @@ cultures_params.each do |culture_params|
     Culture.create(culture_params)
 end
 
-
-
-# @location = @culture.locations.create({})
-
-# CultureLocation.create({ culture_id: culture.id[0], location_ids: location.id[0]})
-
     p "Created #{Culture.count} cultures"
     p "Created #{Location.count} locations"
     
