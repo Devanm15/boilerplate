@@ -7,6 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 # Cultures.destroy_all
 
+# json = ActiveSupport::JSON.decode(File.read('db/seeds/cultures.json'))
+# json.each do |record|
+#   Culture.create!(record)
+# end
+
 cultures_params = [ { name: 'Inuit', 
     description: 'Still collecting resources at this time.', 
     locations_attributes: [{latitude:66.616223, longitude:-94.641224}]
