@@ -5,10 +5,10 @@ ruby '2.6.2'
 
 gem 'react-rails'
 gem "responders"
-gem 'webpacker', '~> 4.x'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2', '>= 5.2.2.1'
+gem 'rails', '~> 5.2.3', '>= 5.2.2.1'
 # Use postgres as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
