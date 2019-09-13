@@ -1,14 +1,13 @@
 class Api::CulturesController < ApplicationController
-  respond_to :json
 
   def index
     @cultures = Culture.all
-    respond_with @cultures
+    render json: @cultures, include: :locations
   end
 
-  def show
-    @culture = Culture.find params[:id]
-  end
+  # def show
+  #   @culture = Culture.find params[:id]
+  # end
 
   private
 
