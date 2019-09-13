@@ -1,3 +1,3 @@
 class Location < ApplicationRecord
-    has_and_belongs_to_many :cultures
+  has_and_belongs_to_many :cultures
 end

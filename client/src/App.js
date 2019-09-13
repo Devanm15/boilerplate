@@ -3,7 +3,8 @@ import axios from 'axios';
 import './App.css';
 import "antd/dist/antd.css";
 import  {Menu, Row, Col, Button} from 'antd';
-import Map from './Map.js';
+// import Map from './Map.js'; 
+import Cultures from './Cultures.js';
 
 
 
@@ -56,7 +57,8 @@ class App extends Component {
           </Menu>
          </Row>
        </div>
-       <Map
+       <Cultures/>
+       {/* <Map
               google={this.props.google}
               center={{
                 lat: 49,
@@ -66,7 +68,7 @@ class App extends Component {
               zoom={2}
               setLocation={this.setLocation}
             />
-        
+         */}
         <ul><Button>Discover Medicinal Plants</Button></ul>
         <ul><Button>Discover Medicinal Culture</Button></ul>
         <ul><Button>Discover Endangered Plant Species</Button></ul>
