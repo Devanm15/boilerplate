@@ -3,16 +3,26 @@ import axios from 'axios';
 
 class Cultures extends Component {
     state={
-        culture: []
+        cultures: [],
+        locations: []
     };
 
     componentDidMount(){
-        axios.get('/api/cultures').then(response => {console.log('hello')})};
+        axios.get('/api/index').then(response => {console.log(response.data)
+          this.setState({ cultures: response.data})
+        })
+    };
     
       render() {
         return (
           <div>
-            {/* <ul>{this.state.cultures}</ul> */}
+            {this.state.cultures.map(culture => {
+              return (
+                <div className='cultures' key={culture.id}>
+                  <h4>{culture.name}</h4>
+                </div>
+                )
+              })}
           </div>
         )
       }
