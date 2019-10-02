@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { withGoogleMap, GoogleMap, withScriptjs, Marker, InfoWindow} from "react-google-maps";
 // import Autocomplete from 'react-google-autocomplete';
 import Geocode from 'react-geocode';
+import Axios from 'axios';
 Geocode.setApiKey( process.env.REACT_APP_GOOGLE_API_KEY );
 Geocode.enableDebug();
 // const styles = require('./_map.json')
@@ -48,8 +49,11 @@ class Map extends Component{
 
 			error => {
 				console.error('Geocode Error', error );
-			}
+			},
 		);
+		Axios.get('/api/index').then(response => {console.log(response.data)
+		})
+
 	};
 	/**
 	 * Component should only update ( meaning re-render ), when the user selects the address, or drags the pin
