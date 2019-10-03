@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api'
 import axios from 'axios';
 
 
@@ -8,29 +8,37 @@ class CultureMap extends Component {
 		super( props );
 		this.state = {
         locals: [],
-				lat: 0,
-				lng: 0
+        cultureInfo: [],
+        InfoWindow: false
     }
-    
   };
+  
 
-    componentDidMount(){ 
-      axios.get('/api/index').then(response => {
-        console.log(response.data)
-        const locations = response.data
+  async componentDidMount(){ 
+    
+      const [locations, cultures] = await Promise.all([
+       axios.get('/api/locations'),
+        axios.get('api/cultures')
+      ]);
+      console.log(cultures.data)
         this.setState({
-          locals: locations,
-        });        
-    })}
+          locals: locations.data,
+          cultureInfo: cultures.data,
+        });  
+  }
 
     renderMarkers() {
-      return this.state.locals.map((location, key) => {
+      return this.state.locals.map((location) => {
         return <Marker 
         key={ location.id }
         position={{lat: location.latitude, lng: location.longitude }}
+        icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
+        onClick={ {InfoWindow: true}}
         />
       });
+      
     };
+
 
 
   render() {
@@ -51,9 +59,13 @@ class CultureMap extends Component {
             lat: -3.745,
             lng: -38.523
           }}
-        >
-          <div>{ this.renderMarkers() }</div>
-          
+          >
+          <div>{ this.renderMarkers()  }</div>
+          {/* <InfoWindow
+          className="info-window"
+            anchor={Marker.position}
+            visible={this.state.showInfoWindow}
+          ></InfoWindow> */}
         </GoogleMap>
       </LoadScript>
      )
