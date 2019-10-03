@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import axios from 'axios';
+
 
 class CultureMap extends Component {
+
+
+componentDidMount() { 
+  axios.get('/api/index').then(response => {console.log(response.data)
+})};
+  
+   
+
+
   render() {
      return (
       <LoadScript
