@@ -9,36 +9,56 @@ class CultureMap extends Component {
 		this.state = {
         locals: [],
         cultureInfo: [],
-        InfoWindow: false
+        // showInfoWindow: false,
+        // visible: true,
+        isOpen: false,
     }
   };
   
 
   async componentDidMount(){ 
-    
       const [locations, cultures] = await Promise.all([
        axios.get('/api/locations'),
-        axios.get('api/cultures')
-      ]);
-      console.log(cultures.data)
+        axios.get('api/cultures'),
+      ])
         this.setState({
           locals: locations.data,
           cultureInfo: cultures.data,
-        });  
-  }
+        }) 
+    };
+
+    isClicked = () => {
+      console.log()
+        this.setState({
+          isOpen: !false
+        });
+    }
 
     renderMarkers() {
       return this.state.locals.map((location) => {
         return <Marker 
-        key={ location.id }
-        position={{lat: location.latitude, lng: location.longitude }}
-        icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
-        onClick={ {InfoWindow: true}}
-        />
+          onClick={ this.isClicked }
+          key={ location.id }
+          position={{lat: location.latitude, lng: location.longitude }}
+          icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
+          activeMarker={ true }
+        >
+        </Marker>
       });
-      
-    };
+    }
+  
 
+    renderInfoWindows() {
+      return this.state.locals.map((location)=> {
+        return <InfoWindow
+        position={{lat: location.latitude, lng: location.longitude }}
+          key={ location.id }
+
+        ></InfoWindow>
+      })  
+    };
+  
+  
 
 
   render() {
@@ -61,11 +81,8 @@ class CultureMap extends Component {
           }}
           >
           <div>{ this.renderMarkers()  }</div>
-          {/* <InfoWindow
-          className="info-window"
-            anchor={Marker.position}
-            visible={this.state.showInfoWindow}
-          ></InfoWindow> */}
+          {/* <div>{ this.renderInfoWindows()  }</div> */}
+           
         </GoogleMap>
       </LoadScript>
      )
