@@ -4,16 +4,37 @@ import axios from 'axios';
 
 
 class CultureMap extends Component {
+  constructor( props ){
+		super( props );
+		this.state = {
+        locals: [],
+				lat: 0,
+				lng: 0
+    }
+    
+  };
 
+    componentDidMount(){ 
+      axios.get('/api/index').then(response => {
+        console.log(response.data)
+        const locations = response.data
+        this.setState({
+          locals: locations,
+        });        
+    })}
 
-componentDidMount() { 
-  axios.get('/api/index').then(response => {console.log(response.data)
-})};
-  
-   
+    renderMarkers() {
+      return this.state.locals.map((location, key) => {
+        return <Marker 
+        key={ location.id }
+        position={{lat: location.latitude, lng: location.longitude }}
+        />
+      });
+    };
 
 
   render() {
+    
      return (
       <LoadScript
         id="script-loader"
@@ -31,9 +52,8 @@ componentDidMount() {
             lng: -38.523
           }}
         >
-          <Marker
-            position={{lat: 49.01, lng: -123.01 }}
-          />
+          <div>{ this.renderMarkers() }</div>
+          
         </GoogleMap>
       </LoadScript>
      )
