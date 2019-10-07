@@ -8,59 +8,65 @@ class CultureMap extends Component {
 		super( props );
 		this.state = {
         locals: [],
-        cultureInfo: [],
+        // cultureInfo: [],
         activeMarkerLocationId: null,
     }
   };
   
 
   async componentDidMount(){ 
-    const [locations, cultures] = await Promise.all([
-      axios.get('/api/locations'),
-        axios.get('api/cultures'),
-      ])
-      this.setState({
-        locals: locations.data,
-        cultureInfo: cultures.data,
-      }) 
-    };
+    const { data: locations } = await (axios.get('/api/locations'))
+    console.log(locations)
+    this.setState({
+      locals: locations,
+    }) 
+  };
 
-    onMarkerClicked = (location) => {
-        this.setState({
-          activeMarkerLocationId: location.id,
-        });
+  onMarkerClicked = (location) => {
+    this.setState({
+      activeMarkerLocationId: location.id,
+    });
     }
 
-    renderMarkers() {
-      return this.state.locals.map((location) => {
-        let onClickHandler = (marker) => { this.onMarkerClicked(location) };
-
-        return <Marker 
-          onClick={ onClickHandler }
-          key={ location.id }
-          position={{lat: location.latitude, lng: location.longitude }}
-          icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
-        > 
-        </Marker>       
-      });
-    }
+  renderMarkers() {
+    return this.state.locals.map((location) => {
+      let onClickHandler = (marker) => { this.onMarkerClicked(location) };
+      
+      return <Marker 
+        onClick={ onClickHandler }
+        key={ location.id }
+        position={{lat: location.latitude, lng: location.longitude }}
+        icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
+      > 
+      </Marker>       
+    });
+  }
 
     
   
 
-    renderActiveMarkerInfoWindow() {
-      let { activeMarkerLocationId: locationId, locals } = this.state;
-      if (locationId) {
-      let { latitude, longitude } = locals.find(function(location) {
+  renderActiveMarkerInfoWindow() {
+    let { activeMarkerLocationId: locationId, locals } = this.state;
+    if (locationId) {
+      let { latitude, longitude, cultures } = locals.find(function(location) {
         return location.id === locationId;
       });
-        return <InfoWindow
-          position={{lat: latitude, lng: longitude }}
+      console.log(cultures)
+
+      let cultureInfoCards = cultures.map((culture) => {
+        return <div>
+          <h4>{ culture.name }</h4>
+          <p>{ culture.description }</p>
+        </div>
+      });
+
+      return <InfoWindow
+        position={{lat: latitude, lng: longitude }}
         >
-          <div>Hello World</div>
-        </InfoWindow>
-      }  
-    };
+          <div>{ cultureInfoCards }</div>
+      </InfoWindow>
+    }  
+  };
   
   
 
