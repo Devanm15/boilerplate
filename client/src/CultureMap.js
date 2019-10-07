@@ -9,53 +9,57 @@ class CultureMap extends Component {
 		this.state = {
         locals: [],
         cultureInfo: [],
-        // showInfoWindow: false,
-        // visible: true,
-        isOpen: false,
+        activeMarkerLocationId: null,
     }
   };
   
 
   async componentDidMount(){ 
-      const [locations, cultures] = await Promise.all([
-       axios.get('/api/locations'),
+    const [locations, cultures] = await Promise.all([
+      axios.get('/api/locations'),
         axios.get('api/cultures'),
       ])
-        this.setState({
-          locals: locations.data,
-          cultureInfo: cultures.data,
-        }) 
+      this.setState({
+        locals: locations.data,
+        cultureInfo: cultures.data,
+      }) 
     };
 
-    isClicked = () => {
-      console.log()
+    onMarkerClicked = (location) => {
         this.setState({
-          isOpen: !false
+          activeMarkerLocationId: location.id,
         });
     }
 
     renderMarkers() {
       return this.state.locals.map((location) => {
+        let onClickHandler = (marker) => { this.onMarkerClicked(location) };
+
         return <Marker 
-          onClick={ this.isClicked }
+          onClick={ onClickHandler }
           key={ location.id }
           position={{lat: location.latitude, lng: location.longitude }}
           icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
-          activeMarker={ true }
-        >
-        </Marker>
+        > 
+        </Marker>       
       });
     }
+
+    
   
 
-    renderInfoWindows() {
-      return this.state.locals.map((location)=> {
+    renderActiveMarkerInfoWindow() {
+      let { activeMarkerLocationId: locationId, locals } = this.state;
+      if (locationId) {
+      let { latitude, longitude } = locals.find(function(location) {
+        return location.id === locationId;
+      });
         return <InfoWindow
-        position={{lat: location.latitude, lng: location.longitude }}
-          key={ location.id }
-
-        ></InfoWindow>
-      })  
+          position={{lat: latitude, lng: longitude }}
+        >
+          <div>Hello World</div>
+        </InfoWindow>
+      }  
     };
   
   
@@ -80,9 +84,10 @@ class CultureMap extends Component {
             lng: -38.523
           }}
           >
+            
           <div>{ this.renderMarkers()  }</div>
-          {/* <div>{ this.renderInfoWindows()  }</div> */}
-           
+          <div>{ this.renderActiveMarkerInfoWindow()  }</div>
+          
         </GoogleMap>
       </LoadScript>
      )
