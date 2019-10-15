@@ -8,7 +8,6 @@ class CultureMap extends Component {
 		super( props );
 		this.state = {
         locals: [],
-        // cultureInfo: [],
         activeMarkerLocationId: null,
     }
   };
@@ -62,6 +61,7 @@ class CultureMap extends Component {
 
       return <InfoWindow
         position={{lat: latitude, lng: longitude }}
+        
         >
           <div>{ cultureInfoCards }</div>
       </InfoWindow>
