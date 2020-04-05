@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
 import axios from 'axios';
 
 class Locations extends Component {
@@ -12,10 +12,11 @@ class Locations extends Component {
           {console.log(response)
           })};
     
-    //   render() {
-        // return (
-        // )
-    //   }
+      render() {
+        return (
+            <div>Hello</div>
+        )
+      }
     }
     
     export default Locations

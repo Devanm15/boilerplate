@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-google-maps/api": "^1.8.6",
     "antd": "^4.1.0",
     "axios": "^0.18.0",
     "react": "^16.8.6",
@@ -29,6 +30,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-
   "proxy": "http://localhost:3001"
 }

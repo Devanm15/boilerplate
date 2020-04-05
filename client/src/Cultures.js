@@ -9,7 +9,7 @@ class Cultures extends Component {
 
     componentDidMount(){
         axios.get('/api/index').then(response => 
-          {console.log(response.data[0].locations[0].latitude)
+          {console.log(response.data[0].latitude)
           // this.setState({ cultures: response.data, locations: response.data.locations})
           })};
     

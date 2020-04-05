@@ -4,7 +4,7 @@ import './App.css';
 import "antd/dist/antd.css";
 import  {Menu, Row, Button} from 'antd';
 import Map from './Map.js'; 
-// import Cultures from './Cultures.js';
+import Cultures from './Cultures.js';
 import Locations from './Locations.js';
 
 
@@ -59,7 +59,7 @@ class App extends Component {
           </Menu>
          </Row>
        </div>
-       {/* <Cultures/> */}
+       <Cultures/>
        <Locations/>
        <Map
               google={this.props.google}
