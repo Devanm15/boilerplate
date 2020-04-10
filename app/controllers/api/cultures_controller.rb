@@ -1,20 +1,20 @@
-# class Api::CulturesController < ApplicationController
+class Api::CulturesController < ApplicationController
+  
+  def index
+    @cultures = Culture.all
+    render json: @cultures, include: :locations
+  end
 
-#   def index
-#     @cultures = Culture.all
-#     render json: @cultures, include: :locations
-#   end
+  def show
+    @culture = Culture.find params[:id]
+  end
 
-#   # def show
-#   #   @culture = Culture.find params[:id]
-#   # end
+  private
 
-#   private
-
-#   def culture_params
-#     params.require(:culture).permit(
-#       :name,
-#       :descrition
-#     )
-#   end
-# end
+  def culture_params
+    params.require(:culture).permit(
+      :name,
+      :description
+    )
+  end
+end

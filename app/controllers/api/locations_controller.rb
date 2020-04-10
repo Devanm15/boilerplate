@@ -6,7 +6,7 @@ class Api::LocationsController < ApplicationController
     end
   
     # def show
-    #   @culture = Culture.find params[:id]
+    #   @location = Locations.find params[:id]
     # end
   
     private
