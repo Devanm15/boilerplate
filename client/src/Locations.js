@@ -1,22 +1,18 @@
-import React, {Component} from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 class Locations extends Component {
-    state={
-        locations: [],
-        
-    };
+  state = {
+    locations: []
+  };
 
-    componentDidMount(){
-        axios.get('/api/index').then(response => 
-          {console.log(response)
-          })};
-    
-      render() {
-        return (
-            <div>Hello</div>
-        )
-      }
-    }
-    
-    export default Locations
+  componentDidMount() {
+    axios.get("/api/index/").then(response => {});
+  }
+
+  render() {
+    return <div></div>;
+  }
+}
+
+export default Locations;
