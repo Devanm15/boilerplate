@@ -19,15 +19,23 @@ class Map extends Component {
       mapPosition: {
         lat: this.props.center.lat,
         lng: this.props.center.lng
-      },
-      cultures: this.props.showCultures,
-      locations: this.props.showLocations
-      // markerPosition: {
-      // 	lat: this.props.center.lat,
-      // 	lng: this.props.center.lng
-      // }
+      }
     };
-    console.log(props);
+  }
+
+  renderMarkers() {
+    const cultures = this.props.cultures && this.props.cultures.cultures;
+    // const { cultures } = this.props.cultures;
+    if (cultures) {
+      const createMarker = culture => {
+        const position = {
+          lat: culture.locations[0].latitude,
+          lng: culture.locations[0].longitude
+        };
+        return <Marker position={position} />;
+      };
+      return cultures.map(createMarker);
+    }
   }
 
   render() {
@@ -47,13 +55,9 @@ class Map extends Component {
             lat: this.state.mapPosition.lat,
             lng: this.state.mapPosition.lng
           }}
-        />
-        <Marker
-          LatLng={{
-            lat: this.state.mapPosition.lat,
-            lng: this.state.mapPosition.lng
-          }}
-        />
+        >
+          {this.renderMarkers()}
+        </GoogleMap>
       </LoadScript>
     );
   }
