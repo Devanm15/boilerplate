@@ -3,13 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-    "@react-google-maps/api": "^1.7.6",
-    "antd": "^3.23.6",
-=======
     "@react-google-maps/api": "^1.8.6",
     "antd": "^4.1.0",
->>>>>>> master
     "axios": "^0.18.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
