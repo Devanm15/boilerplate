@@ -2,6 +2,14 @@ class Api::LocationsController < ApplicationController
 
     def index
       @locations = Location.all
-      render json: @locations, include: :cultures
+      render json: @locations
     end
-end
+  
+    # def show
+    #   @location = Locations.find params[:id]
+    # end
+  
+    private
+  
+  end
+  

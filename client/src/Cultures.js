@@ -1,32 +1,35 @@
-import React, {Component} from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 class Cultures extends Component {
-    state={
-        cultures: [],
-        locations: []
-    };
+  state = {
+    cultures: []
+  };
 
-    componentDidMount(){
-        axios.get('/api/index').then(response => {console.log(response.data)
-          this.setState({ cultures: response.data})
-        })
-    };
-    
-      render() {
-        return (
-          <div>
-            {this.state.cultures.map(culture => {
-              return (
-                <div className='cultures' key={culture.id}>
-                  <h4>{culture.name}</h4>
-                </div>
-                )
-              })}
-          </div>
-        )
-      }
-    }
-    
-    export default Cultures
+  componentDidMount() {
+    axios.get("/api/index").then(response => {
+      // console.log(response.data[0]);
+      // console.log(response.data[0].locations[0].latitude);
+      this.setState({
+        cultures: response.data
+      });
+    });
+  }
 
+  render() {
+    return (
+      <div>
+        {this.state.cultures.map(culture => {
+          return (
+            <div className="cultures" key={culture.id}>
+              {/* <h4>{culture.name}</h4> */}
+            </div>
+          );
+        })}
+        {/* {this.cultures.locations.map(location => <p key={location.id}>{location.latitude}</p>)} */}
+      </div>
+    );
+  }
+}
+
+export default Cultures;

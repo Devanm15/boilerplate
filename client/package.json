@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@react-google-maps/api": "^1.7.6",
     "antd": "^3.23.6",
+=======
+    "@react-google-maps/api": "^1.8.6",
+    "antd": "^4.1.0",
+>>>>>>> master
     "axios": "^0.18.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-geocode": "^0.1.2",
     "react-google-autocomplete": "^1.1.1",
     "react-google-maps": "^9.4.5",
-    "react-scripts": "2.1.8",
+    "react-scripts": "^3.4.1",
     "webpack": "^4.28.3",
     "yarn": "^1.17.3"
   },
