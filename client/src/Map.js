@@ -12,10 +12,6 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: "",
-      city: "",
-      area: "",
-      state: "",
       mapPosition: {
         lat: this.props.center.lat,
         lng: this.props.center.lng
@@ -25,14 +21,16 @@ class Map extends Component {
 
   renderMarkers() {
     const cultures = this.props.cultures && this.props.cultures.cultures;
-    // const { cultures } = this.props.cultures;
     if (cultures) {
       const createMarker = culture => {
         const position = {
           lat: culture.locations[0].latitude,
           lng: culture.locations[0].longitude
         };
-        return <Marker position={position} />;
+        const culture_id = {
+          culture_id: culture.id
+        };
+        return <Marker position={position} id={culture_id} />;
       };
       return cultures.map(createMarker);
     }
