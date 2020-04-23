@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import { withGoogleMap, GoogleMap, withScriptjs, Marker, InfoWindow} from "react-google-maps";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 // import Autocomplete from 'react-google-autocomplete';
+import { Button } from "antd";
 import Geocode from "react-geocode";
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 Geocode.enableDebug();
@@ -15,22 +16,26 @@ class Map extends Component {
       mapPosition: {
         lat: this.props.center.lat,
         lng: this.props.center.lng
-      }
+      },
+      displayCultures: false
     };
+  }
+
+  ToggleCultureButton() {
+    this.setState(currentState => ({
+      displayCultures: !currentState.displayCultures
+    }));
   }
 
   renderMarkers() {
     const cultures = this.props.cultures && this.props.cultures.cultures;
     if (cultures) {
-      const createMarker = culture => {
+      const createMarker = (culture, index) => {
         const position = {
           lat: culture.locations[0].latitude,
           lng: culture.locations[0].longitude
         };
-        const culture_id = {
-          culture_id: culture.id
-        };
-        return <Marker position={position} id={culture_id} />;
+        return <Marker position={position} key={index} />;
       };
       return cultures.map(createMarker);
     }
@@ -54,8 +59,24 @@ class Map extends Component {
             lng: this.state.mapPosition.lng
           }}
         >
-          {this.renderMarkers()}
+          {this.state.displayCultures && this.renderMarkers()}
         </GoogleMap>
+        <div className="toggle-buttons">
+          <ul>
+            <Button>Discover Medicinal Plants</Button>
+          </ul>
+          <ul>
+            <Button
+              onMouseEnter={() => !this.ToggleCultureButton()}
+              onMouseLeave={() => this.ToggleCultureButton()}
+            >
+              Discover Medicinal Culture
+            </Button>
+          </ul>
+          <ul>
+            <Button>Discover Endangered Plant Species</Button>
+          </ul>
+        </div>
       </LoadScript>
     );
   }
