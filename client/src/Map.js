@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { Router, Redirect } from "react-router-dom";
 // import { withGoogleMap, GoogleMap, withScriptjs, Marker, InfoWindow} from "react-google-maps";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 // import Autocomplete from 'react-google-autocomplete';
-import { Button } from "antd";
 import Geocode from "react-geocode";
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 Geocode.enableDebug();
@@ -16,15 +16,8 @@ class Map extends Component {
       mapPosition: {
         lat: this.props.center.lat,
         lng: this.props.center.lng
-      },
-      displayCultures: false
+      }
     };
-  }
-
-  ToggleCultureButton() {
-    this.setState(currentState => ({
-      displayCultures: !currentState.displayCultures
-    }));
   }
 
   renderMarkers() {
@@ -59,24 +52,8 @@ class Map extends Component {
             lng: this.state.mapPosition.lng
           }}
         >
-          {this.state.displayCultures && this.renderMarkers()}
+          {this.props.showCultureMarkers && this.renderMarkers()}
         </GoogleMap>
-        <div className="toggle-buttons">
-          <ul>
-            <Button>Discover Medicinal Plants</Button>
-          </ul>
-          <ul>
-            <Button
-              onMouseEnter={() => !this.ToggleCultureButton()}
-              onMouseLeave={() => this.ToggleCultureButton()}
-            >
-              Discover Medicinal Culture
-            </Button>
-          </ul>
-          <ul>
-            <Button>Discover Endangered Plant Species</Button>
-          </ul>
-        </div>
       </LoadScript>
     );
   }
