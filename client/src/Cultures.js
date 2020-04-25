@@ -1,35 +1,32 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-class Cultures extends Component {
-  state = {
-    cultures: []
-  };
+function Cultures(props) {
+  const [cultures, setCultures] = useState([]);
 
-  componentDidMount() {
-    axios.get("/api/index").then(response => {
-      // console.log(response.data[0]);
-      // console.log(response.data[0].locations[0].latitude);
-      this.setState({
-        cultures: response.data
+  useEffect(
+    state => {
+      axios.get("/api/index").then(response => {
+        // console.log(response.data);
+        setCultures({
+          cultures: response.data
+        });
       });
-    });
-  }
+    },
+    [props]
+  );
 
-  render() {
-    return (
-      <div>
-        {this.state.cultures.map(culture => {
-          return (
-            <div className="cultures" key={culture.id}>
-              {/* <h4>{culture.name}</h4> */}
-            </div>
-          );
-        })}
-        {/* {this.cultures.locations.map(location => <p key={location.id}>{location.latitude}</p>)} */}
-      </div>
-    );
-  }
+  return (
+    <div className="cultureInput">
+      <form>
+        <label>
+          Name:
+          <input type="text" name="name" />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  );
 }
 
 export default Cultures;
