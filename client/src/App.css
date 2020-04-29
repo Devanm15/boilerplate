@@ -41,6 +41,28 @@ h1 {
   text-align: left;
 }
 
-.info-Container {
-  margin-left: 80%;
+.Info-Container {
+  margin-left: 50%;
+  margin-right: 10%;
+  position: absolute;
+  border-style: solid;
+  border-color: grey;
+  padding: 10%;
+  float: right;
+  width: 50%;
+  height: 607px;
+}
+.Map-Container {
+  position: static;
+  float: left;
+  width: 50%;
+  border-style: solid;
+  border-color: grey;
+}
+
+ul {
+  height: 80%;
+  width: 30%;
+  overflow: hidden;
+  overflow-y: scroll;
 }

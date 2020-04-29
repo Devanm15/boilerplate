@@ -7,8 +7,7 @@ import Cultures from "./Cultures.js";
 
 function MapContainer(props) {
   const [cultures, setCultures] = useState();
-  const [showCultureMarkers, setShowCultureMarkers] = useState(false);
-  const [isHidden, setVisibility] = useState(true);
+  const [showCultureMarkers] = useState();
 
   useEffect(
     state => {
@@ -21,48 +20,18 @@ function MapContainer(props) {
     [props]
   );
 
-  function onCulturesButtonClick() {
-    setVisibility({ isHidden: false });
-    console.log(isHidden);
-    renderCulturesComponent();
-  }
-
-  function renderCulturesComponent() {
-    return <Cultures />;
-  }
-
   return (
-    <div className="MapContainer">
+    <div className="Map-Container">
       <Map
         center={{
           lat: 30,
           lng: 0
         }}
         height="100vh"
-        zoom={0.0001}
         cultures={cultures}
-        showCultureMarkers={showCultureMarkers}
+        showCultureMarkers={props.showCultureMarkers}
       />
-      <div className="cultures-component">
-        {isHidden && renderCulturesComponent()}
-      </div>
-      <div className="toggle-buttons">
-        <ul>
-          <Button>Discover Medicinal Plants</Button>
-        </ul>
-        <ul>
-          <Button
-            onMouseEnter={() => setShowCultureMarkers(true)}
-            onMouseLeave={() => setShowCultureMarkers(false)}
-            onClick={() => onCulturesButtonClick()}
-          >
-            Discover Medicinal Cultures
-          </Button>
-        </ul>
-        <ul>
-          <Button>Discover Endangered Plant Species</Button>
-        </ul>
-      </div>
+      <div className="cultures-component"></div>
     </div>
   );
 }

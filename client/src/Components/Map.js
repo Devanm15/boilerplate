@@ -36,6 +36,7 @@ class Map extends Component {
 
   render() {
     return (
+      // <div className="Map">
       <LoadScript
         id="script-loader"
         googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}
@@ -43,8 +44,8 @@ class Map extends Component {
         <GoogleMap
           id="my-map"
           mapContainerStyle={{
-            height: "400px",
-            width: "800px"
+            height: "600px",
+            width: "100%"
           }}
           zoom={1.5}
           center={{

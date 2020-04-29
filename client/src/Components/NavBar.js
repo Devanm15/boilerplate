@@ -1,5 +1,7 @@
 import React, { useEffect, useState, Component } from "react";
 import { Redirect } from "react-router-dom";
+import "antd/dist/antd.css";
+import { Menu, Row, Button } from "antd";
 import axios from "axios";
 
 function NavBar(props) {
@@ -8,8 +10,8 @@ function NavBar(props) {
       <Row>
         <h1>Earth Medicine App</h1>
         <Menu
-          onClick={this.handleClick}
-          selectedKeys={[this.state.current]}
+          // onClick={this.handleClick}
+          // selectedKeys={[this.state.current]}
           mode="horizontal"
         >
           <Menu.Item key="login">Login | Register</Menu.Item>
