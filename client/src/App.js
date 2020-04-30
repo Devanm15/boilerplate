@@ -13,33 +13,47 @@ import { Button } from "antd";
 
 function App(props) {
   const [showCultureMarkers, setShowCultureMarkers] = useState(false);
-  const [CulturesButtonClick, setCulturesButtonClick] = useState(false);
+  const [culturesButtonClick, setCulturesButtonClick] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+
+  function handleCultureClick(e) {
+    if (clickCount == 0) {
+      setCulturesButtonClick(true);
+      setShowCultureMarkers(true);
+      setClickCount(1);
+    } else if (clickCount == 1) {
+      setCulturesButtonClick(false);
+      setClickCount(0);
+    }
+  }
+
+  function handleMouseLeave(e) {
+    if (culturesButtonClick == true) {
+    }
+    if (culturesButtonClick == false) {
+      setShowCultureMarkers(false);
+    }
+  }
 
   return (
     <div className="App">
-      <Router>
-        {/* <Route path="/cultures" component={Cultures}></Route> */}
-      </Router>
-      {/* <Locations /> */}
       <Navbar />
       <div className="toggle-buttons">
         <Button>Discover Medicinal Plants</Button>
         <Button
           onMouseEnter={() => setShowCultureMarkers(true)}
-          onMouseLeave={() => setShowCultureMarkers(false)}
-          onClick={() => setCulturesButtonClick(true)}
+          onMouseLeave={() => handleMouseLeave()}
+          onClick={() => handleCultureClick()}
         >
           Discover Medicinal Cultures
         </Button>
 
-        <Button onClick={() => setCulturesButtonClick(false)}>
-          Discover Endangered Plant Species
-        </Button>
+        <Button>Discover Endangered Plant Species</Button>
       </div>
 
       <MapContainer showCultureMarkers={showCultureMarkers} />
 
-      <InfoContainer showCultureComponent={CulturesButtonClick} />
+      <InfoContainer showCultureComponent={culturesButtonClick} />
 
       {/* <Plants /> */}
     </div>
