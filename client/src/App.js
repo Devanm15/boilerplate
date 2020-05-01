@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import "antd/dist/antd.css";
-import Cultures from "./Components/Cultures.js";
-import Locations from "./Components/Locations.js";
 import MapContainer from "./Components/MapContainer.js";
 import InfoContainer from "./Components/InfoContainer.js";
 import Navbar from "./Components/NavBar.js";

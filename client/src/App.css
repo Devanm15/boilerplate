@@ -47,10 +47,12 @@ h1 {
   position: absolute;
   border-style: solid;
   border-color: grey;
-  padding: 10%;
   float: right;
   width: 50%;
   height: 607px;
+}
+.Culture-Component {
+  width: 150vw;
 }
 .Map-Container {
   position: static;
@@ -65,4 +67,8 @@ ul {
   width: 30%;
   overflow: hidden;
   overflow-y: scroll;
+}
+
+#Modal {
+  position: fixed;
 }

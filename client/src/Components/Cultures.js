@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Modal, Button, Collapse } from "antd";
+import "antd/dist/antd.css";
 import axios from "axios";
 
 function Cultures(props) {
   const [culturesObj, setCultures] = useState([]);
+  const [cultureNameClick, setCultureNameClick] = useState([false]);
+  const { Panel } = Collapse;
 
   useEffect(
     state => {
@@ -15,14 +19,26 @@ function Cultures(props) {
     [props]
   );
 
-  function showCultureInfo() {
+  function cultureMenu(key) {
+    console.log(key);
+    setCultureNameClick(true);
+  }
+
+  function showCulture() {
     let allCultures = culturesObj.culturesObj;
     if (allCultures) {
       return allCultures.map((culture, index) => {
         return (
-          <ul>
-            <h4 key={index}>{culture.name}</h4>
-            {/* <p key={index}>{culture.description}</p> */}
+          <ul key={index}>
+            <Collapse onChange={cultureMenu}>
+              <Panel header={culture.name} key={culture.id}>
+                <Collapse>
+                  <Panel header="Description" key={culture.id}>
+                    <p>{culture.description}</p>
+                  </Panel>
+                </Collapse>
+              </Panel>
+            </Collapse>
           </ul>
         );
       });
@@ -30,12 +46,14 @@ function Cultures(props) {
   }
 
   return (
-    <div className="Culture-Component">
-      <h1>Discover Cultures</h1>
-      {showCultureInfo()}
-      <div className="Culture-Info"></div>
-      <div className="cultureInput">
-        {/* <form>
+    console.log(cultureNameClick),
+    (
+      <div className="Culture-Component">
+        <h1>Discover Cultures</h1>
+        {showCulture()}
+        <div className="Culture-Info"></div>
+        <div className="cultureInput">
+          {/* <form>
             <label>
               Name:
               <input type="text" name="name" />
@@ -52,8 +70,9 @@ function Cultures(props) {
             </label>
             <input type="submit" value="Submit" />
           </form> */}
+        </div>
       </div>
-    </div>
+    )
   );
 }
 
