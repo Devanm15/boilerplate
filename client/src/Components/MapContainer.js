@@ -6,8 +6,11 @@ import { Button } from "antd";
 import Cultures from "./Cultures.js";
 
 function MapContainer(props) {
-  const [cultures, setCultures] = useState();
+  const [cultures, setCultures] = useState([]);
   const [showCultureMarkers] = useState();
+  const [latitude, setLatitude] = useState(30);
+  const [longitude, setLongitude] = useState(0);
+  const [zoom, setZoom] = useState(1.5);
 
   useEffect(
     state => {
@@ -19,20 +22,41 @@ function MapContainer(props) {
     },
     [props]
   );
+  function isolateMarkers() {
+    let allCultures = cultures.cultures;
+    if (allCultures) {
+      allCultures.map(culture => {
+        if (
+          culture.id === Number(props.cultureId) &&
+          latitude !== culture.locations[0].latitude
+        ) {
+          setLatitude(culture.locations[0].latitude);
+          setLongitude(culture.locations[0].longitude);
+          setZoom(25);
+        }
+      });
+    }
+  }
 
   return (
-    <div className="Map-Container">
-      <Map
-        center={{
-          lat: 30,
-          lng: 0
-        }}
-        height="100vh"
-        cultures={cultures}
-        showCultureMarkers={props.showCultureMarkers}
-      />
-      <div className="cultures-component"></div>
-    </div>
+    console.log(latitude),
+    (
+      <div className="Map-Container">
+        <Map
+          center={{
+            lat: latitude,
+            lng: longitude
+          }}
+          zoom={zoom}
+          height="100vh"
+          cultures={cultures}
+          showCultureMarkers={props.showCultureMarkers}
+          cultureId={props.cultureId}
+        />
+        {isolateMarkers()}
+        <div className="cultures-component"></div>
+      </div>
+    )
   );
 }
 

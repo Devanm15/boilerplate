@@ -12,12 +12,7 @@ Geocode.enableDebug();
 class Map extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      mapPosition: {
-        lat: this.props.center.lat,
-        lng: this.props.center.lng
-      }
-    };
+    this.state = {};
   }
 
   renderMarkers() {
@@ -28,13 +23,23 @@ class Map extends Component {
           lat: culture.locations[0].latitude,
           lng: culture.locations[0].longitude
         };
-        return <Marker position={position} key={index} />;
+        return (
+          <Marker
+            position={position}
+            key={index}
+            icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
+          />
+        );
       };
       return cultures.map(createMarker);
     }
   }
 
   render() {
+    console.log(this.props.center.lat);
+    console.log(this.props.zoom);
+    // console.log(this.state.mapPosition.lat);
+
     return (
       // <div className="Map">
       <LoadScript
@@ -47,10 +52,10 @@ class Map extends Component {
             height: "600px",
             width: "100%"
           }}
-          zoom={1.5}
+          zoom={this.props.zoom}
           center={{
-            lat: this.state.mapPosition.lat,
-            lng: this.state.mapPosition.lng
+            lat: this.props.center.lat,
+            lng: this.props.center.lng
           }}
         >
           {this.props.showCultureMarkers && this.renderMarkers()}
