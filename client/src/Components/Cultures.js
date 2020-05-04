@@ -5,7 +5,8 @@ import axios from "axios";
 
 function Cultures(props) {
   const [culturesObj, setCultures] = useState([]);
-  const [cultureNameClick, setCultureNameClick] = useState([false]);
+  const [culture] = useState();
+  const [cultureKey, setCultureKey] = useState();
   const { Panel } = Collapse;
 
   useEffect(
@@ -20,8 +21,8 @@ function Cultures(props) {
   );
 
   function cultureMenu(key) {
-    console.log(key);
-    setCultureNameClick(true);
+    setCultureKey(key);
+    props.onClick(key);
   }
 
   function showCulture() {
@@ -46,33 +47,10 @@ function Cultures(props) {
   }
 
   return (
-    console.log(cultureNameClick),
-    (
-      <div className="Culture-Component">
-        <h1>Discover Cultures</h1>
-        {showCulture()}
-        <div className="Culture-Info"></div>
-        <div className="cultureInput">
-          {/* <form>
-            <label>
-              Name:
-              <input type="text" name="name" />
-            </label>
-            <input type="submit" value="Submit" />
-            <label>
-              Description:
-              <input type="text" name="description:" />
-            </label>
-            <input type="submit" value="Submit" />
-            <label>
-              References:
-              <input type="text" name="references:" />
-            </label>
-            <input type="submit" value="Submit" />
-          </form> */}
-        </div>
-      </div>
-    )
+    <div className="Culture-Component">
+      <h1>Discover Cultures</h1>
+      {showCulture()}
+    </div>
   );
 }
 

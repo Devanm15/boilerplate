@@ -6,7 +6,9 @@ import Cultures from "./Cultures.js";
 function infoContainer(props) {
   return (
     <div className="Info-Container">
-      {props.showCultureComponent && <Cultures />}
+      {props.showCultureComponent && (
+        <Cultures onClick={props.cultureClickHandler} />
+      )}
     </div>
   );
 }

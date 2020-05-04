@@ -50,6 +50,7 @@ h1 {
   float: right;
   width: 50%;
   height: 607px;
+  overflow: auto;
 }
 .Culture-Component {
   width: 150vw;
@@ -69,6 +70,6 @@ ul {
   overflow-y: scroll;
 }
 
-#Modal {
-  position: fixed;
+.Collapse {
+  overflow: auto;
 }

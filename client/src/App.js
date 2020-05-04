@@ -13,6 +13,7 @@ function App(props) {
   const [showCultureMarkers, setShowCultureMarkers] = useState(false);
   const [culturesButtonClick, setCulturesButtonClick] = useState(false);
   const [clickCount, setClickCount] = useState(0);
+  const [cultureId, setCultureId] = useState();
 
   function handleCultureClick(e) {
     if (clickCount == 0) {
@@ -32,6 +33,10 @@ function App(props) {
       setShowCultureMarkers(false);
     }
   }
+  function onCultureClick(cultureId) {
+    setCultureId(cultureId);
+    console.log(cultureId);
+  }
 
   return (
     <div className="App">
@@ -49,11 +54,15 @@ function App(props) {
         <Button>Discover Endangered Plant Species</Button>
       </div>
 
-      <MapContainer showCultureMarkers={showCultureMarkers} />
+      <MapContainer
+        showCultureMarkers={showCultureMarkers}
+        cultureId={cultureId}
+      />
 
-      <InfoContainer showCultureComponent={culturesButtonClick} />
-
-      {/* <Plants /> */}
+      <InfoContainer
+        showCultureComponent={culturesButtonClick}
+        cultureClickHandler={onCultureClick}
+      />
     </div>
   );
 }
