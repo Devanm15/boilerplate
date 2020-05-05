@@ -7,12 +7,12 @@ import MapContainer from "./Components/MapContainer.js";
 import InfoContainer from "./Components/InfoContainer.js";
 import Navbar from "./Components/NavBar.js";
 import { Button } from "antd";
-// import Plants from "./Plants.js";
 
 function App(props) {
   const [cultures, setCultures] = useState([]);
   const [showCultureMarkers, setShowCultureMarkers] = useState(false);
   const [culturesButtonClick, setCulturesButtonClick] = useState(false);
+  const [formButtonClick, setFormButtonClick] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [cultureId, setCultureId] = useState();
 
@@ -34,6 +34,15 @@ function App(props) {
       setClickCount(1);
     } else if (clickCount == 1) {
       setCulturesButtonClick(false);
+      setClickCount(0);
+    }
+  }
+  function handleFormClick(e) {
+    if (clickCount == 0) {
+      setFormButtonClick(true);
+      setClickCount(1);
+    } else if (clickCount == 1) {
+      setFormButtonClick(false);
       setClickCount(0);
     }
   }
@@ -64,8 +73,8 @@ function App(props) {
         </Button>
 
         <Button>Discover Endangered Plant Species</Button>
+        <Button onClick={() => handleFormClick()}>Add to the App!</Button>
       </div>
-
       <MapContainer
         showCultureMarkers={showCultureMarkers}
         cultureId={cultureId}
@@ -74,6 +83,7 @@ function App(props) {
 
       <InfoContainer
         showCultureComponent={culturesButtonClick}
+        showFormComponent={formButtonClick}
         cultureClickHandler={onCultureClick}
       />
     </div>
