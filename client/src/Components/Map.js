@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { Router, Redirect } from "react-router-dom";
-// import { withGoogleMap, GoogleMap, withScriptjs, Marker, InfoWindow} from "react-google-maps";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  InfoWindow
+} from "@react-google-maps/api";
 // import Autocomplete from 'react-google-autocomplete';
 import Geocode from "react-geocode";
+import infoContainer from "./InfoContainer";
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 Geocode.enableDebug();
 
@@ -36,10 +41,6 @@ class Map extends Component {
   }
 
   render() {
-    console.log(this.props.center.lat);
-    console.log(this.props.zoom);
-    // console.log(this.state.mapPosition.lat);
-
     return (
       // <div className="Map">
       <LoadScript
@@ -57,6 +58,7 @@ class Map extends Component {
             lat: this.props.center.lat,
             lng: this.props.center.lng
           }}
+          zoomControl={false}
         >
           {this.props.showCultureMarkers && this.renderMarkers()}
         </GoogleMap>

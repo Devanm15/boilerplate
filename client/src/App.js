@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
@@ -10,10 +10,22 @@ import { Button } from "antd";
 // import Plants from "./Plants.js";
 
 function App(props) {
+  const [cultures, setCultures] = useState([]);
   const [showCultureMarkers, setShowCultureMarkers] = useState(false);
   const [culturesButtonClick, setCulturesButtonClick] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [cultureId, setCultureId] = useState();
+
+  useEffect(
+    state => {
+      axios.get("/api/index").then(response => {
+        setCultures({
+          cultures: response.data
+        });
+      });
+    },
+    [props]
+  );
 
   function handleCultureClick(e) {
     if (clickCount == 0) {
@@ -57,6 +69,7 @@ function App(props) {
       <MapContainer
         showCultureMarkers={showCultureMarkers}
         cultureId={cultureId}
+        cultures={cultures}
       />
 
       <InfoContainer
