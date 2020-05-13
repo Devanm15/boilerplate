@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create]
   resources :registrations, only: [:create]
   delete :logout, to: "sessions#logout"
-  get :logout_in, to "sessions#logged_in"
+  get :logout_in, to: "sessions#logged_in"
   namespace :api, defaults: { format: 'json' } do # /api/data
     get '/index', to: 'cultures#index'
     root 'cultures#index'
