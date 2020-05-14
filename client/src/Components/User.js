@@ -133,7 +133,6 @@ function User(props) {
                 onChange={handleChange}
               />
               <div className="error-message">
-                {" "}
                 {errors.password && errors.password.type === "required" && (
                   <p>Your input is required</p>
                 )}
