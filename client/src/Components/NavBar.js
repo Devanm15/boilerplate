@@ -32,6 +32,7 @@ function NavBar(props) {
     props.handleLogin(data);
     setModal(false);
   }
+
   function handleLogoutClick() {
     axios
       .delete("http://localhost:3000/api/logout", { withCredentials: true })
@@ -68,7 +69,8 @@ function NavBar(props) {
       >
         {<User handleSuccessfulAuth={handleSuccessfulAuth} />}
       </Modal>
-      <h2>{props.loggedInStatus}</h2>
+      <h2 classname="login-status">{props.loggedInStatus} as</h2>
+      <h2 className="nav-username">{props.username}</h2>
     </div>
   );
 }
