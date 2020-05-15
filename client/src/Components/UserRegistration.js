@@ -13,6 +13,9 @@ function UserRegistration(props) {
         "http://localhost:3000/api/registrations",
         {
           user: {
+            first_name: data.firsName,
+            last_name: data.lastName,
+            username: data.username,
             email: data.email,
             password: data.password,
             password_confirmation: data.password_confirmation
@@ -38,6 +41,42 @@ function UserRegistration(props) {
   return (
     <div className="Register">
       <form onSubmit={handleSubmit(onSubmit)} className="Register-form">
+        <div className="Reg-firstName">
+          <label>FirstName: </label>
+          <input
+            name="firstName"
+            type="firstName"
+            ref={register({ required: true })}
+            onChange={handleChange}
+          />
+          <div className="error-message">
+            {errors.username && "Please enter your first name"}
+          </div>
+        </div>
+        <div className="Reg-lastName">
+          <label>lastName: </label>
+          <input
+            name="lastName"
+            type="lastName"
+            ref={register({ required: true })}
+            onChange={handleChange}
+          />
+          <div className="error-message">
+            {errors.username && "Please enter your last name"}
+          </div>
+        </div>
+        <div className="Reg-Username">
+          <label>Username: </label>
+          <input
+            name="username"
+            type="username"
+            ref={register({ required: true })}
+            onChange={handleChange}
+          />
+          <div className="error-message">
+            {errors.username && "A username is required"}
+          </div>
+        </div>
         <div className="Reg-Email">
           <label>Email: </label>
           <input
@@ -47,7 +86,7 @@ function UserRegistration(props) {
             onChange={handleChange}
           />
           <div className="error-message">
-            {errors.email && "Email Required"}
+            {errors.email && "an email is required"}
           </div>
         </div>
         <div className="reg-password">
