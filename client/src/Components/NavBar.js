@@ -32,6 +32,7 @@ function NavBar(props) {
     props.handleLogin(data);
     setModal(false);
   }
+
   function handleLogoutClick() {
     axios
       .delete("http://localhost:3000/api/logout", { withCredentials: true })
@@ -47,6 +48,7 @@ function NavBar(props) {
     <div className="Menu">
       <Row>
         <h1>Earth Medicine App</h1>
+
         <Menu mode="horizontal">
           {login && (
             <Menu.Item key="login" onClick={showModal}>
@@ -60,6 +62,8 @@ function NavBar(props) {
           )}
         </Menu>
       </Row>
+      <h2 className="login-status">{props.loggedInStatus}</h2>
+      <h2 className="nav-username">{props.username}</h2>
       <Modal
         visible={show}
         onCancel={handleCancel}
@@ -68,7 +72,6 @@ function NavBar(props) {
       >
         {<User handleSuccessfulAuth={handleSuccessfulAuth} />}
       </Modal>
-      <h2>{props.loggedInStatus}</h2>
     </div>
   );
 }

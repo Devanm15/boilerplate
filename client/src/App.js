@@ -15,7 +15,7 @@ function App(props) {
   const [clickCount, setClickCount] = useState(0);
   const [cultureId, setCultureId] = useState();
   const [loggedInStatus, setLoggedInStatus] = useState("Not Logged In");
-  const [user, setUser] = useState({});
+  const [loggedInUser, setUser] = useState();
 
   useEffect(
     state => {
@@ -37,10 +37,10 @@ function App(props) {
       .then(response => {
         if (response.data.logged_in && loggedInStatus === "Not Logged In") {
           setLoggedInStatus("Logged In");
-          setUser(response.data.user);
+          setUser(response.data.user.username);
         } else if (!response.data.logged_in && loggedInStatus === "Logged In") {
           setLoggedInStatus("Not Logged In");
-          setUser({});
+          setUser();
         }
       })
       .catch(error => {
@@ -54,7 +54,7 @@ function App(props) {
 
   function handleLogout() {
     setLoggedInStatus("Not Logged In");
-    setUser({});
+    setUser();
   }
 
   function handleCultureClick(e) {
@@ -86,7 +86,6 @@ function App(props) {
   }
   function onCultureClick(cultureId) {
     setCultureId(cultureId);
-    console.log(cultureId);
   }
 
   return (
@@ -96,6 +95,7 @@ function App(props) {
         loggedInStatus={loggedInStatus}
         handleLogin={handleLogin}
         handleLogout={handleLogout}
+        username={loggedInUser}
       />
       <div className="toggle-buttons">
         <Button>Discover Medicinal Plants</Button>
