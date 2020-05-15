@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 import "./App.css";
 import "antd/dist/antd.css";
@@ -15,6 +14,8 @@ function App(props) {
   const [formButtonClick, setFormButtonClick] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [cultureId, setCultureId] = useState();
+  const [loggedInStatus, setLoggedInStatus] = useState("Not Logged In");
+  const [user, setUser] = useState({});
 
   useEffect(
     state => {
@@ -24,8 +25,33 @@ function App(props) {
         });
       });
     },
+
     [props]
   );
+
+  function checkLoginStatus() {
+    axios
+      .get("http://localhost:3000/api/logged_in", {
+        withCredentials: true
+      })
+      .then(response => {
+        if (response.data.logged_in && loggedInStatus === "Not Logged In") {
+          setLoggedInStatus("Logged In");
+          setUser(response.data.user);
+        } else if (!response.data.logged_in && loggedInStatus === "Logged In") {
+          setLoggedInStatus("Not Logged In");
+          setUser({});
+        }
+      })
+      .catch(error => {
+        console.log("check login error", error);
+      });
+  }
+
+  function handleLogin(data) {
+    console.log(data);
+    setLoggedInStatus("Logged In");
+  }
 
   function handleCultureClick(e) {
     if (clickCount == 0) {
@@ -61,7 +87,12 @@ function App(props) {
 
   return (
     <div className="App">
-      <Navbar />
+      {checkLoginStatus()}
+      <Navbar
+        loggedInStatus={loggedInStatus}
+        handleLogin={handleLogin}
+        user={user}
+      />
       <div className="toggle-buttons">
         <Button>Discover Medicinal Plants</Button>
         <Button

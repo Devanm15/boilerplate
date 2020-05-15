@@ -1,5 +1,6 @@
-class SessionsController < ApplicationController
+class Api::SessionsController < ApplicationController
     include CurrentUserConcern
+    
     def create
         user = User.find_by(email: params["user"]["email"]).try(:authenticate, params["user"]["password"])
 
@@ -14,6 +15,7 @@ class SessionsController < ApplicationController
             render json: {status: 401}
         end
     end
+
     def logged_in
         if @current_user
             render json: {

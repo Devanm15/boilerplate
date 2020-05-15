@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Component } from "react";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
 import "antd/dist/antd.css";
 import { Menu, Row, Modal } from "antd";
 import User from "./User.js";
@@ -14,6 +15,11 @@ function NavBar(props) {
     setModal(false);
   }
   function handleOk() {
+    setModal(false);
+  }
+
+  function handleSuccessfulAuth(data) {
+    props.handleLogin(data);
     setModal(false);
   }
   return (
@@ -32,8 +38,9 @@ function NavBar(props) {
         onOk={handleOk}
         destroyOnClose={true}
       >
-        {<User />}
+        {<User handleSuccessfulAuth={handleSuccessfulAuth} />}
       </Modal>
+      <h2>{props.loggedInStatus}</h2>
     </div>
   );
 }

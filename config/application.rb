@@ -20,6 +20,9 @@ Bundler.require(*Rails.groups)
 module RailsBackEnd
   class Application < Rails::Application
 
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_namespace_key'
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
