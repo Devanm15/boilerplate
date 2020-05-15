@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import "antd/dist/antd.css";
@@ -7,7 +7,17 @@ import User from "./User.js";
 
 function NavBar(props) {
   const [show, setModal] = useState(false);
+  const [login, setShowLogin] = useState(false);
 
+  useEffect(state => {
+    {
+      if (props.loggedInStatus === "Logged In") {
+        setShowLogin(false);
+      } else if (props.loggedInStatus === "Not Logged In") {
+        setShowLogin(true);
+      }
+    }
+  });
   function showModal() {
     setModal(true);
   }
@@ -22,14 +32,32 @@ function NavBar(props) {
     props.handleLogin(data);
     setModal(false);
   }
+  function handleLogoutClick() {
+    axios
+      .delete("http://localhost:3000/api/logout", { withCredentials: true })
+      .then(response => {
+        props.handleLogout();
+      })
+      .catch(error => {
+        console.log("logout error", error);
+      });
+  }
+
   return (
     <div className="Menu">
       <Row>
         <h1>Earth Medicine App</h1>
         <Menu mode="horizontal">
-          <Menu.Item key="login" onClick={showModal}>
-            Login | Register
-          </Menu.Item>
+          {login && (
+            <Menu.Item key="login" onClick={showModal}>
+              Login | Register
+            </Menu.Item>
+          )}
+          {!login && (
+            <Menu.Item key="logout" onClick={handleLogoutClick}>
+              Logout
+            </Menu.Item>
+          )}
         </Menu>
       </Row>
       <Modal

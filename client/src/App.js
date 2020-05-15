@@ -49,8 +49,12 @@ function App(props) {
   }
 
   function handleLogin(data) {
-    console.log(data);
     setLoggedInStatus("Logged In");
+  }
+
+  function handleLogout() {
+    setLoggedInStatus("Not Logged In");
+    setUser({});
   }
 
   function handleCultureClick(e) {
@@ -91,7 +95,7 @@ function App(props) {
       <Navbar
         loggedInStatus={loggedInStatus}
         handleLogin={handleLogin}
-        user={user}
+        handleLogout={handleLogout}
       />
       <div className="toggle-buttons">
         <Button>Discover Medicinal Plants</Button>

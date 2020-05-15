@@ -29,7 +29,7 @@ function UserLogin(props) {
     event.preventDefault();
   };
   function handleChange(event) {
-    console.log(event.target);
+    // console.log(event.target);
   }
 
   return (
