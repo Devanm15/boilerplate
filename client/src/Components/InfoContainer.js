@@ -11,7 +11,10 @@ function infoContainer(props) {
         <Cultures onClick={props.cultureClickHandler} />
       )}
       {props.showFormComponent && (
-        <InputForm onClick={props.FormClickHandler} />
+        <InputForm
+          onClick={props.FormClickHandler}
+          loggedInStatus={props.loggedInStatus}
+        />
       )}
     </div>
   );

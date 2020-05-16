@@ -48,7 +48,7 @@ function App(props) {
       });
   }
 
-  function handleLogin(data) {
+  function handleLogin() {
     setLoggedInStatus("Logged In");
   }
 
@@ -120,6 +120,7 @@ function App(props) {
         showCultureComponent={culturesButtonClick}
         showFormComponent={formButtonClick}
         cultureClickHandler={onCultureClick}
+        loggedInStatus={loggedInStatus}
       />
     </div>
   );
