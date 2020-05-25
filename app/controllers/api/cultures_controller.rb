@@ -3,17 +3,19 @@ class Api::CulturesController < ApplicationController
 
   
   def index
-    @cultures = Culture.all
+    @cultures = policy_scope(Culture)
     render json: @cultures, include: :locations
   end
 
   def show
-    @culture = Culture.find params[:id]
-    authorize @culture
-  
   end
 
   private
+
+  def set_culture 
+    @culture = Culture.find params[:id]
+     authorize @culture
+  end
 
   def culture_params
     params.require(:culture).permit(

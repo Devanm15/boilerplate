@@ -1,5 +1,4 @@
 class Api::SessionsController < ApplicationController
-    include CurrentUserConcern
     
     skip_after_action :verify_authorized, only: [:create, :logged_in, :logout]
 
