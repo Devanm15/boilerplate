@@ -129,6 +129,7 @@ function App(props) {
         showFormComponent={showFormComponent}
         cultureClickHandler={onCultureClick}
         loggedInStatus={loggedInStatus}
+        cultures={cultures}
       />
     </div>
   );

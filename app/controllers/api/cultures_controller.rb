@@ -1,4 +1,6 @@
 class Api::CulturesController < ApplicationController
+  before_action :set_culture, only: [:show, :edit, :update, :destroy]
+
   
   def index
     @cultures = Culture.all
@@ -7,6 +9,8 @@ class Api::CulturesController < ApplicationController
 
   def show
     @culture = Culture.find params[:id]
+    authorize @culture
+  
   end
 
   private
