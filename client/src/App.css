@@ -73,3 +73,11 @@ ul {
 .Collapse {
   overflow: auto;
 }
+
+.suggestion-active,
+.suggestions li:hover {
+  background-color: rgb(228, 226, 226);
+  color: black;
+  cursor: pointer;
+  font-weight: 700;
+}

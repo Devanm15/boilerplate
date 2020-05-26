@@ -8,12 +8,16 @@ function infoContainer(props) {
   return (
     <div className="Info-Container">
       {props.showCultureComponent && (
-        <Cultures onClick={props.cultureClickHandler} />
+        <Cultures
+          onClick={props.cultureClickHandler}
+          cultures={props.cultures}
+        />
       )}
       {props.showFormComponent && (
         <InputForm
           onClick={props.FormClickHandler}
           loggedInStatus={props.loggedInStatus}
+          cultures={props.cultures}
         />
       )}
     </div>
