@@ -18,6 +18,7 @@ function infoContainer(props) {
           onClick={props.FormClickHandler}
           loggedInStatus={props.loggedInStatus}
           cultures={props.cultures}
+          onClick={props.cultureClickHandler}
         />
       )}
     </div>

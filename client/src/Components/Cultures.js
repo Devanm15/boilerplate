@@ -23,6 +23,7 @@ function Cultures(props) {
   function cultureMenu(key) {
     setCultureKey(key);
     props.onClick(key);
+    console.log(key);
   }
 
   function showCulture() {
