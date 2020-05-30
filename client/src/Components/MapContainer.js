@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Map from "./Map.js";
 
 function MapContainer(props) {
@@ -30,6 +30,13 @@ function MapContainer(props) {
     }
   }
 
+  useEffect(function changeZoom() {
+    if (props.showLocateMarker == true) {
+      setZoom(1.5);
+    }
+    [props.showLocateMarker];
+  });
+
   return (
     <div className="Map-Container">
       <Map
@@ -42,8 +49,13 @@ function MapContainer(props) {
         cultures={props.cultures}
         showCultureMarkers={props.showCultureMarkers}
         cultureId={props.cultureId}
+        showLocateMarker={props.showLocateMarker}
+        getNewPosition={props.getNewPosition}
+        newLatitude={props.newLatitude}
+        newLongitude={props.newLongitude}
       />
       {isolateMarkers()}
+
       <div className="cultures-component"></div>
     </div>
   );

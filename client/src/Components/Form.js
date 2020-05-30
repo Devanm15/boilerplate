@@ -6,12 +6,8 @@ import {
   Radio,
   Select,
   DatePicker,
-  Checkbox,
-  InputNumber,
-  TreeSelect,
-  Switch
+  AutoComplete
 } from "antd";
-import axios from "axios";
 
 function InputForm(props) {
   const [cultureLatitude, setCultureLatitude] = useState();
@@ -21,7 +17,9 @@ function InputForm(props) {
   const [filteredSuggestions, setFilteredSuggestion] = useState([]);
   const [showNames, setShowNames] = useState(false);
   const [cultureNameInput, setCultureNameInput] = useState("");
+  // const [lat, setLat] = useState();
 
+  // Select Culture or Plants
   function culturePlantSelect(e) {
     let newCultureList = [];
     if (e.target.value === "Cultures") {
@@ -33,7 +31,7 @@ function InputForm(props) {
     if (e.target.value === "Plants") {
     }
   }
-
+  // Handle Name input
   function handleNameInput(e) {
     const cultureNameInput = e.currentTarget.value;
     const suggestions = cultureNameList;
@@ -79,25 +77,6 @@ function InputForm(props) {
     }
   }
 
-  function handleDescriptionInput(e) {
-    console.log(e.target.value);
-  }
-
-  useEffect(function handleLocationInput() {
-    props.cultures.cultures.map(cultures => {
-      if (cultureNameInput == cultures.name) {
-        console.log(cultures);
-        console.log(cultures.id);
-        props.onClick(cultures.id);
-        setCultureLatitude(cultures.locations[0].latitude);
-        setCultureLongitude(cultures.locations[0].longitude);
-      }
-      [cultures.locations];
-    });
-  });
-  function handleSourceInput(e) {
-    console.log(e.target.value);
-  }
   let suggestionsListComponent;
   if (showNames && cultureNameInput) {
     if (filteredSuggestions.length) {
@@ -125,9 +104,32 @@ function InputForm(props) {
       );
     }
   }
+  // Description Input
+  function handleDescriptionInput(e) {
+    console.log(e.target.value);
+  }
+  // Location Input
+  useEffect(function handleLocationInput() {
+    props.cultures.cultures.map(cultures => {
+      if (cultureNameInput == cultures.name) {
+        props.onClick(cultures.id);
+        setCultureLatitude(cultures.locations[0].latitude);
+        setCultureLongitude(cultures.locations[0].longitude);
+      }
+    });
+  });
+  function radioClicked(e) {
+    if (e.target.value == "suggest-map") {
+      props.radioClicked(true);
+    }
+  }
+  // Source Input
+  function handleSourceInput(e) {
+    console.log(e.target.value);
+  }
 
   return (
-    console.log(cultureLatitude),
+    console.log(props.newLatitude),
     (
       <div className="contribution-form">
         <h1>Contribute to the App</h1>
@@ -168,26 +170,25 @@ function InputForm(props) {
               />
             </Form.Item>
             <Form.Item label="Location">
-              {cultureLatitude && (
-                <div className="location-display">
-                  <p>
-                    <Checkbox className="location-coordinates" checked={true} />
-                    These are the coordinates we have saved in the database does
-                    this look right to you?
-                  </p>
-                  <p>Latitude: {cultureLatitude}</p>
-                  <p>Longitude:{cultureLongitude}</p>
+              <Radio.Group defaultValue="location-coordinates">
+                {cultureLatitude && (
+                  <div className="location-display">
+                    <p>
+                      <Radio value="location-coordinates" />
+                      These are the coordinates we have saved in the database
+                      does this look right to you?
+                    </p>
+                    <p>Latitude:{cultureLatitude}</p>
+                    <p>Longitude:{cultureLongitude}</p>
+                  </div>
+                )}
+                <div>
+                  <Radio value="suggest-map" onChange={radioClicked} checked />
+                  Click here to select the location on the map:
+                  <p>Latitude:{props.newLatitude}</p>
+                  <p>Longitude:{props.newLongitude}</p>
                 </div>
-              )}
-              <p>
-                <Checkbox></Checkbox>Select here for a google maps generated
-                list:
-              </p>
-              <Select></Select>
-              <p>
-                <Checkbox></Checkbox>Or Click here to select the location on the
-                map:
-              </p>
+              </Radio.Group>
             </Form.Item>
             <Form.Item label="DatePicker">
               <DatePicker picker="year" />
@@ -211,5 +212,8 @@ function InputForm(props) {
     )
   );
 }
-
+<script
+  type="text/javascript"
+  src={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&libraries=places&callback=initAutocomplete`}
+></script>;
 export default InputForm;

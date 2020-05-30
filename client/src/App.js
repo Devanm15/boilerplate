@@ -11,11 +11,14 @@ import { Button } from "antd";
 function App(props) {
   const [cultures, setCultures] = useState([]);
   const [showCultureMarkers, setShowCultureMarkers] = useState(false);
+  const [showLocateMarker, setShowLocateMarker] = useState(false);
   const [showCultureComponent, setShowCultureComponent] = useState(false);
   const [showFormComponent, setShowFormComponent] = useState(false);
   const [cultureId, setCultureId] = useState();
   const [loggedInStatus, setLoggedInStatus] = useState("Not Logged In");
   const [loggedInUser, setUser] = useState();
+  const [newLatitude, setNewLatitude] = useState(0);
+  const [newLongitude, setNewLongitude] = useState(0);
   let userEmail = Cookies.get("email");
 
   useEffect(
@@ -97,6 +100,18 @@ function App(props) {
     setCultureId(cultureId);
   }
 
+  function radioClicked(key) {
+    if (key == true) {
+      setShowLocateMarker(true);
+    }
+  }
+
+  function getNewPosition(e) {
+    if (e) {
+      setNewLatitude(e.latLng.lat());
+      setNewLongitude(e.latLng.lng());
+    }
+  }
   return (
     <div className="App">
       <Navbar
@@ -120,16 +135,23 @@ function App(props) {
       </div>
       <MapContainer
         showCultureMarkers={showCultureMarkers}
+        showLocateMarker={showLocateMarker}
         cultureId={cultureId}
         cultures={cultures}
+        getNewPosition={getNewPosition}
+        newLatitude={newLatitude}
+        newLongitude={newLongitude}
       />
 
       <InfoContainer
         showCultureComponent={showCultureComponent}
         showFormComponent={showFormComponent}
         cultureClickHandler={onCultureClick}
+        radioClicked={radioClicked}
         loggedInStatus={loggedInStatus}
         cultures={cultures}
+        newLatitude={newLatitude}
+        newLongitude={newLongitude}
       />
     </div>
   );

@@ -19,6 +19,9 @@ function infoContainer(props) {
           loggedInStatus={props.loggedInStatus}
           cultures={props.cultures}
           onClick={props.cultureClickHandler}
+          radioClicked={props.radioClicked}
+          newLatitude={props.newLatitude}
+          newLongitude={props.newLongitude}
         />
       )}
     </div>
