@@ -30,13 +30,6 @@ function MapContainer(props) {
     }
   }
 
-  useEffect(function changeZoom() {
-    if (props.showLocateMarker == true) {
-      setZoom(1.5);
-    }
-    [props.showLocateMarker];
-  });
-
   return (
     <div className="Map-Container">
       <Map

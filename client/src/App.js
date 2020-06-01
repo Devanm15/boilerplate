@@ -86,6 +86,8 @@ function App(props) {
       setShowFormComponent(true);
     } else {
       setShowFormComponent(false);
+      setShowLocateMarker(false);
+      setShowCultureMarkers(false);
     }
   }
 
@@ -98,11 +100,20 @@ function App(props) {
   }
   function onCultureClick(cultureId) {
     setCultureId(cultureId);
+    setShowCultureMarkers(true);
   }
 
   function radioClicked(key) {
-    if (key == true) {
+    console.log(key);
+    if (key === true && showFormComponent === true) {
       setShowLocateMarker(true);
+    }
+  }
+
+  function locationRadioClicked(key) {
+    console.log(key);
+    if (key === true && showFormComponent === true) {
+      setShowLocateMarker(false);
     }
   }
 
@@ -141,6 +152,7 @@ function App(props) {
         getNewPosition={getNewPosition}
         newLatitude={newLatitude}
         newLongitude={newLongitude}
+        showFormComponent={showFormComponent}
       />
 
       <InfoContainer
@@ -148,6 +160,7 @@ function App(props) {
         showFormComponent={showFormComponent}
         cultureClickHandler={onCultureClick}
         radioClicked={radioClicked}
+        locationRadioClicked={locationRadioClicked}
         loggedInStatus={loggedInStatus}
         cultures={cultures}
         newLatitude={newLatitude}

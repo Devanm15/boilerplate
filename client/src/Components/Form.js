@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  DatePicker,
-  AutoComplete
-} from "antd";
+import { Form, Input, Button, Radio, DatePicker } from "antd";
 
 function InputForm(props) {
   const [cultureLatitude, setCultureLatitude] = useState();
@@ -17,8 +9,7 @@ function InputForm(props) {
   const [filteredSuggestions, setFilteredSuggestion] = useState([]);
   const [showNames, setShowNames] = useState(false);
   const [cultureNameInput, setCultureNameInput] = useState("");
-  // const [lat, setLat] = useState();
-
+  const { RangePicker } = DatePicker;
   // Select Culture or Plants
   function culturePlantSelect(e) {
     let newCultureList = [];
@@ -119,8 +110,12 @@ function InputForm(props) {
     });
   });
   function radioClicked(e) {
-    if (e.target.value == "suggest-map") {
+    if (e.target.value === "suggest-map") {
       props.radioClicked(true);
+      props.locationRadioClicked(false);
+    } else if (e.target.value === "location-coordinates") {
+      props.locationRadioClicked(true);
+      props.radioClicked(false);
     }
   }
   // Source Input
@@ -129,91 +124,96 @@ function InputForm(props) {
   }
 
   return (
-    console.log(props.newLatitude),
-    (
-      <div className="contribution-form">
-        <h1>Contribute to the App</h1>
-        {props.loggedInStatus === "Logged In" && (
-          <Form
-            labelCol={{
-              span: 4
-            }}
-            wrapperCol={{
-              span: 14
-            }}
-            layout="horizontal"
-            initialValues={{
-              size: "large"
-            }}
-          >
-            <Form.Item label="Contribute To:">
-              <Radio.Group onChange={culturePlantSelect}>
-                <Radio.Button value="Cultures">Cultures</Radio.Button>
-                <Radio.Button value="Plants">Plants</Radio.Button>
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item label="Name">
-              <Input
-                type="text"
-                onChange={handleNameInput}
-                onKeyDown={onKeyDown}
-                value={cultureNameInput}
-              />
+    <div className="contribution-form">
+      <h1>Contribute information to the App:</h1>
+      {props.loggedInStatus === "Logged In" && (
+        <Form
+          labelCol={{
+            span: 4
+          }}
+          wrapperCol={{
+            span: 14
+          }}
+          layout="horizontal"
+          initialValues={{
+            size: "large"
+          }}
+        >
+          <h3>Which databse would you like to contribute to?</h3>
+          <Form.Item label="Contribute To:">
+            <Radio.Group onChange={culturePlantSelect}>
+              <Radio.Button value="Cultures">Cultures</Radio.Button>
+              <Radio.Button value="Plants">Plants</Radio.Button>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item label="Name">
+            <Input
+              type="text"
+              onChange={handleNameInput}
+              onKeyDown={onKeyDown}
+              value={cultureNameInput}
+              required={true}
+            />
 
-              {suggestionsListComponent}
-            </Form.Item>
-            <Form.Item label="Description">
-              <textarea
-                className="ant-input"
-                type="text"
-                onChange={handleDescriptionInput}
-              />
-            </Form.Item>
-            <Form.Item label="Location">
-              <Radio.Group defaultValue="location-coordinates">
-                {cultureLatitude && (
-                  <div className="location-display">
-                    <p>
-                      <Radio value="location-coordinates" />
-                      These are the coordinates we have saved in the database
-                      does this look right to you?
-                    </p>
-                    <p>Latitude:{cultureLatitude}</p>
-                    <p>Longitude:{cultureLongitude}</p>
-                  </div>
-                )}
-                <div>
-                  <Radio value="suggest-map" onChange={radioClicked} checked />
-                  Click here to select the location on the map:
-                  <p>Latitude:{props.newLatitude}</p>
-                  <p>Longitude:{props.newLongitude}</p>
+            {suggestionsListComponent}
+          </Form.Item>
+          <Form.Item label="Description">
+            <textarea
+              className="ant-input"
+              type="text"
+              onChange={handleDescriptionInput}
+              maxLength={140}
+            />
+          </Form.Item>
+          <Form.Item label="Location">
+            <Radio.Group
+              required={true}
+              defaultValue="location-coordinates"
+              onChange={radioClicked}
+            >
+              {cultureLatitude && (
+                <div className="location-display">
+                  <p>
+                    <Radio value="location-coordinates" />
+                    These are the coordinates we have saved in the database does
+                    this look right to you?
+                  </p>
+                  <p>Latitude:{cultureLatitude}</p>
+                  <p>Longitude:{cultureLongitude}</p>
                 </div>
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item label="DatePicker">
-              <DatePicker picker="year" />
-            </Form.Item>
-            <Form.Item label="Sources">
-              <Input onChange={handleSourceInput} />
-            </Form.Item>
-            <Button value="Submit-Data">Submit</Button>
-          </Form>
-        )}
-        {props.loggedInStatus === "Not Logged In" && (
-          <div className="No-User">
-            <h2>We would love your contributions!</h2>
-            <p>
-              If you would like to contribute to the Earth Medicine App, please
-              register with us!
-            </p>
-          </div>
-        )}
-      </div>
-    )
+              )}
+              <div>
+                <Radio value="suggest-map" />
+                Click here to select the location on the map:
+                <p>Latitude:{props.newLatitude}</p>
+                <p>Longitude:{props.newLongitude}</p>
+              </div>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item label="DatePicker">
+            <h3>
+              Picking a date or Range is optional, if the information is current
+              you can leave this blank
+            </h3>
+            <RangePicker picker="year" />
+          </Form.Item>
+          <Form.Item label="Sources">
+            <Input onChange={handleSourceInput} required={true} />
+          </Form.Item>
+          <Button value="Submit-Data">Submit</Button>
+        </Form>
+      )}
+      {props.loggedInStatus === "Not Logged In" && (
+        <div className="No-User">
+          <h2>We would love your contributions!</h2>
+          <p>
+            If you would like to contribute to the Earth Medicine App, please
+            register with us!
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
-<script
-  type="text/javascript"
-  src={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&libraries=places&callback=initAutocomplete`}
-></script>;
+
 export default InputForm;
