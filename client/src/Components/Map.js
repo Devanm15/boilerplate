@@ -49,6 +49,7 @@ class Map extends Component {
           }}
           icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
           onDragEnd={e => this.props.getNewPosition(e)}
+          animation={google.maps.Animation.BOUNCE}
         />
       );
       return locationMarker;

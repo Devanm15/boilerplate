@@ -20,6 +20,7 @@ function infoContainer(props) {
           cultures={props.cultures}
           onClick={props.cultureClickHandler}
           radioClicked={props.radioClicked}
+          locationRadioClicked={props.locationRadioClicked}
           newLatitude={props.newLatitude}
           newLongitude={props.newLongitude}
         />
