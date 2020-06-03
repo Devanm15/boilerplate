@@ -22,6 +22,7 @@ function InputForm(props) {
         newCultureList.push((name = cultures.name));
       });
       setCultureNameList(newCultureList);
+      setDatabaseName("Cultures");
     }
     if (e.target.value === "Plants") {
     }
@@ -128,29 +129,6 @@ function InputForm(props) {
   }
 
   const onSubmit = data => {
-    console.log(data.name);
-    console.log(data.value);
-    console.log(data.label);
-    console.log(data);
-    // axios
-    //   .post("http://localhost:3000/api/index", {
-    //     // culture: {
-    //     //   name: data.firsName,
-    //     //   last_name: data.lastName,
-    //     //   username: data.username,
-    //     //   email: data.email,
-    //     //   password: data.password,
-    //     //   password_confirmation: data.password_confirmation
-    //     // }
-    //   })
-    //   .then(response => {
-    //     if (response.data.status === "created") {
-    //       console.log("registration res", response);
-    //     }
-    //   })
-    // .catch(error => {
-    //   console.log("reg error", error);
-    // });
     event.preventDefault();
   };
   const onFinish = values => {
