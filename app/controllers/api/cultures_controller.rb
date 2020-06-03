@@ -10,6 +10,14 @@ class Api::CulturesController < ApplicationController
   def show
   end
 
+  # def create
+  #   name: params["culture"]["name"],
+  #   description: params["culture"]["description"],
+  #   date_range: params["culture"]["date_range"],
+  #   source: params["culture"][ "source"],
+ 
+  # end 
+
   private
 
   def set_culture 

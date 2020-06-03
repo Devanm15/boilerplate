@@ -23,7 +23,7 @@ function App(props) {
 
   useEffect(
     state => {
-      axios.get("/api/index").then(response => {
+      axios.get("/api/index/").then(response => {
         setCultures({
           cultures: response.data
         });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Radio, DatePicker } from "antd";
+import { useForm } from "react-hook-form";
 
 function InputForm(props) {
   const [cultureLatitude, setCultureLatitude] = useState();
@@ -10,6 +11,9 @@ function InputForm(props) {
   const [showNames, setShowNames] = useState(false);
   const [cultureNameInput, setCultureNameInput] = useState("");
   const { RangePicker } = DatePicker;
+  const { register, handleSubmit, errors, getValues } = useForm();
+  const [form] = Form.useForm();
+
   // Select Culture or Plants
   function culturePlantSelect(e) {
     let newCultureList = [];
@@ -123,6 +127,39 @@ function InputForm(props) {
     console.log(e.target.value);
   }
 
+  const onSubmit = data => {
+    console.log(data.name);
+    console.log(data.value);
+    console.log(data.label);
+    console.log(data);
+    // axios
+    //   .post("http://localhost:3000/api/index", {
+    //     // culture: {
+    //     //   name: data.firsName,
+    //     //   last_name: data.lastName,
+    //     //   username: data.username,
+    //     //   email: data.email,
+    //     //   password: data.password,
+    //     //   password_confirmation: data.password_confirmation
+    //     // }
+    //   })
+    //   .then(response => {
+    //     if (response.data.status === "created") {
+    //       console.log("registration res", response);
+    //     }
+    //   })
+    // .catch(error => {
+    //   console.log("reg error", error);
+    // });
+    event.preventDefault();
+  };
+  const onFinish = values => {
+    console.log(values);
+  };
+  function handleChange(event) {
+    console.log(event.target);
+  }
+
   return (
     <div className="contribution-form">
       <h1>Contribute information to the App:</h1>
@@ -138,6 +175,9 @@ function InputForm(props) {
           initialValues={{
             size: "large"
           }}
+          form={form}
+          onSubmit={handleSubmit(onSubmit)}
+          // onFinish={onFinish}
         >
           <h3>Which databse would you like to contribute to?</h3>
           <Form.Item label="Contribute To:">
@@ -146,10 +186,11 @@ function InputForm(props) {
               <Radio.Button value="Plants">Plants</Radio.Button>
             </Radio.Group>
           </Form.Item>
-          <Form.Item label="Name">
+          <Form.Item label="Name" name="name">
             <Input
               type="text"
-              onChange={handleNameInput}
+              onChange={handleChange}
+              onInput={handleNameInput}
               onKeyDown={onKeyDown}
               value={cultureNameInput}
               required={true}
@@ -200,7 +241,9 @@ function InputForm(props) {
           <Form.Item label="Sources">
             <Input onChange={handleSourceInput} required={true} />
           </Form.Item>
-          <Button value="Submit-Data">Submit</Button>
+          <Button type="primary" htmlType="submit" onClick={onSubmit}>
+            Submit
+          </Button>
         </Form>
       )}
       {props.loggedInStatus === "Not Logged In" && (
