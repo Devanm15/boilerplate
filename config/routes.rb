@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     get '/index', to: 'cultures#index'
     root 'cultures#index'
     resources :cultures, :locations, only: [:index, :show]
+    resources :cultures do 
+      resources :locations, only: [:create]
+    end
     resources  :sessions, only: [:create]
     resources :registrations, only: [:create]
     delete :logout, to: "sessions#logout"

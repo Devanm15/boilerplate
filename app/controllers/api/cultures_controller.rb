@@ -1,5 +1,5 @@
 class Api::CulturesController < ApplicationController
-  before_action :set_culture, only: [:show, :edit, :update, :destroy]
+  before_action :set_culture, only: [:show, :edit, :destroy]
 
   
   def index
@@ -10,13 +10,17 @@ class Api::CulturesController < ApplicationController
   def show
   end
 
-  # def create
-  #   name: params["culture"]["name"],
-  #   description: params["culture"]["description"],
-  #   date_range: params["culture"]["date_range"],
-  #   source: params["culture"][ "source"],
- 
-  # end 
+  def create
+   @culture = Culture.create create_params
+    
+    authorize @culture
+  end 
+
+  def update
+    @culture = Culture.update update_params
+
+    authorize @culture
+  end
 
   private
 
@@ -25,10 +29,24 @@ class Api::CulturesController < ApplicationController
      authorize @culture
   end
 
-  def culture_params
+  def create_params
     params.require(:culture).permit(
+      :id,
       :name,
-      :description
+      :description,
+      # :start_date,
+      # :end_date,
+      :source,
+      locations_attributes: [:latitude, :longitude]
+    )
+  end
+  def update_params
+    params.require(:culture).permit(
+      :description,
+      :start_date,
+      :end_date,
+      :source,
+      locations_attributes: [:latitude, :longitude]
     )
   end
 end

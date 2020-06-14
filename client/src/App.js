@@ -104,14 +104,12 @@ function App(props) {
   }
 
   function radioClicked(key) {
-    console.log(key);
     if (key === true && showFormComponent === true) {
       setShowLocateMarker(true);
     }
   }
 
   function locationRadioClicked(key) {
-    console.log(key);
     if (key === true && showFormComponent === true) {
       setShowLocateMarker(false);
     }

@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Radio, DatePicker } from "antd";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function InputForm(props) {
   const [cultureLatitude, setCultureLatitude] = useState();
   const [cultureLongitude, setCultureLongitude] = useState();
+  const [cultureId, setCultureId] = useState();
   const [cultureNameList, setCultureNameList] = useState([]);
   const [activeSuggestion, setActiveSuggestion] = useState(0);
   const [filteredSuggestions, setFilteredSuggestion] = useState([]);
   const [showNames, setShowNames] = useState(false);
   const [cultureNameInput, setCultureNameInput] = useState("");
+  const [sourceInfo, setSourceInfo] = useState("");
+  const [description, setDescription] = useState("");
+  const [startYear, setStartYear] = useState();
+  const [lastYear, setLastYear] = useState();
   const { RangePicker } = DatePicker;
-  const { register, handleSubmit, errors, getValues } = useForm();
+  const { handleSubmit, errors } = useForm();
   const [form] = Form.useForm();
 
-  // Select Culture or Plants
   function culturePlantSelect(e) {
     let newCultureList = [];
     if (e.target.value === "Cultures") {
@@ -22,12 +27,11 @@ function InputForm(props) {
         newCultureList.push((name = cultures.name));
       });
       setCultureNameList(newCultureList);
-      setDatabaseName("Cultures");
     }
     if (e.target.value === "Plants") {
     }
   }
-  // Handle Name input
+
   function handleNameInput(e) {
     const cultureNameInput = e.currentTarget.value;
     const suggestions = cultureNameList;
@@ -100,42 +104,86 @@ function InputForm(props) {
       );
     }
   }
-  // Description Input
+
   function handleDescriptionInput(e) {
-    console.log(e.target.value);
+    setDescription(e.target.value);
   }
-  // Location Input
+
   useEffect(function handleLocationInput() {
     props.cultures.cultures.map(cultures => {
       if (cultureNameInput == cultures.name) {
         props.onClick(cultures.id);
+        setLocationId(cultures.locations[0].id);
         setCultureLatitude(cultures.locations[0].latitude);
         setCultureLongitude(cultures.locations[0].longitude);
+        setCultureId(cultures.id);
       }
     });
   });
   function radioClicked(e) {
-    if (e.target.value === "suggest-map") {
+    if (e.target.value == "suggest-map") {
       props.radioClicked(true);
       props.locationRadioClicked(false);
-    } else if (e.target.value === "location-coordinates") {
+    } else if (e.target.value == "location-coordinates") {
       props.locationRadioClicked(true);
       props.radioClicked(false);
     }
   }
-  // Source Input
-  function handleSourceInput(e) {
-    console.log(e.target.value);
+
+  function handleRangePicker(e) {
+    setStartYear(e[0]._d.getFullYear());
+    setLastYear(e[1]._d.getFullYear());
   }
 
-  const onSubmit = data => {
-    event.preventDefault();
-  };
-  const onFinish = values => {
-    console.log(values);
-  };
+  function handleSourceInput(e) {
+    setSourceInfo(e.target.value);
+  }
+
+  function onSubmit() {
+    if (cultureId) {
+      axios
+        .patch(`/api/cultures/${cultureId}`, {
+          description: description,
+          start_date: startYear,
+          end_date: lastYear,
+          source: sourceInfo,
+          locations_attributes: [
+            {
+              latitude: props.newLatitude,
+              longitude: props.newLongitude
+            }
+          ]
+        })
+        .then(response => {
+          console.log(response);
+        });
+    }
+    axios
+      .post("/api/cultures", {
+        culture: {
+          name: cultureNameInput,
+          description: description,
+          start_date: startYear,
+          end_date: lastYear,
+          source: sourceInfo,
+          locations_attributes: [
+            {
+              latitude: props.newLatitude,
+              longitude: props.newLongitude
+            }
+          ]
+        }
+      })
+      .then(response => {
+        console.log(response);
+      });
+  }
+
   function handleChange(event) {
-    console.log(event.target);
+    if (event.target.value == "suggest-map") {
+    }
+    if (event.target.value == "location-coordinates") {
+    }
   }
 
   return (
@@ -155,7 +203,6 @@ function InputForm(props) {
           }}
           form={form}
           onSubmit={handleSubmit(onSubmit)}
-          // onFinish={onFinish}
         >
           <h3>Which databse would you like to contribute to?</h3>
           <Form.Item label="Contribute To:">
@@ -164,7 +211,7 @@ function InputForm(props) {
               <Radio.Button value="Plants">Plants</Radio.Button>
             </Radio.Group>
           </Form.Item>
-          <Form.Item label="Name" name="name">
+          <Form.Item label="Name">
             <Input
               type="text"
               onChange={handleChange}
@@ -184,16 +231,15 @@ function InputForm(props) {
               maxLength={140}
             />
           </Form.Item>
-          <Form.Item label="Location">
-            <Radio.Group
-              required={true}
-              defaultValue="location-coordinates"
-              onChange={radioClicked}
-            >
+          <Form.Item label="Location" required>
+            <Radio.Group required={true} onChange={radioClicked}>
               {cultureLatitude && (
                 <div className="location-display">
                   <p>
-                    <Radio value="location-coordinates" />
+                    <Radio
+                      value="location-coordinates"
+                      onChange={handleChange}
+                    />
                     These are the coordinates we have saved in the database does
                     this look right to you?
                   </p>
@@ -202,7 +248,7 @@ function InputForm(props) {
                 </div>
               )}
               <div>
-                <Radio value="suggest-map" />
+                <Radio value="suggest-map" onChange={handleChange} />
                 Click here to select the location on the map:
                 <p>Latitude:{props.newLatitude}</p>
                 <p>Longitude:{props.newLongitude}</p>
@@ -214,7 +260,7 @@ function InputForm(props) {
               Picking a date or Range is optional, if the information is current
               you can leave this blank
             </h3>
-            <RangePicker picker="year" />
+            <RangePicker picker="year" onChange={handleRangePicker} />
           </Form.Item>
           <Form.Item label="Sources">
             <Input onChange={handleSourceInput} required={true} />
