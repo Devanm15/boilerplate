@@ -1,0 +1,2 @@
+class DraftCulture < ApplicationRecord
+end
