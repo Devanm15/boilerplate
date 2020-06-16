@@ -113,7 +113,6 @@ function InputForm(props) {
     props.cultures.cultures.map(cultures => {
       if (cultureNameInput == cultures.name) {
         props.onClick(cultures.id);
-        setLocationId(cultures.locations[0].id);
         setCultureLatitude(cultures.locations[0].latitude);
         setCultureLongitude(cultures.locations[0].longitude);
         setCultureId(cultures.id);
@@ -140,7 +139,7 @@ function InputForm(props) {
   }
 
   function onSubmit() {
-    if (cultureId) {
+    if (cultureId && props.newLatitude !== 0 && props.newLongitude !== 0) {
       axios
         .patch(`/api/cultures/${cultureId}`, {
           description: description,
@@ -153,6 +152,17 @@ function InputForm(props) {
               longitude: props.newLongitude
             }
           ]
+        })
+        .then(response => {
+          console.log(response);
+        });
+    } else {
+      axios
+        .patch(`/api/cultures/${cultureId}`, {
+          description: description,
+          start_date: startYear,
+          end_date: lastYear,
+          source: sourceInfo
         })
         .then(response => {
           console.log(response);

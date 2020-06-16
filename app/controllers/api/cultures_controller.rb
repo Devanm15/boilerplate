@@ -17,7 +17,8 @@ class Api::CulturesController < ApplicationController
   end 
 
   def update
-    @culture = Culture.update update_params
+    @culture = Culture.find params[:id]
+    @culture.update! update_params
 
     authorize @culture
   end
