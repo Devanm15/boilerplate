@@ -1,2 +1,0 @@
-class DraftCultureController < ApplicationController
-end

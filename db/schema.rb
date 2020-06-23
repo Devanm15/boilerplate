@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_08_175534) do
+ActiveRecord::Schema.define(version: 2020_06_23_035330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "culture_drafts", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "start_date"
+    t.integer "end_date"
+    t.string "source"
+    t.boolean "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "cultures", force: :cascade do |t|
     t.string "name"
