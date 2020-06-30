@@ -139,38 +139,9 @@ function InputForm(props) {
   }
 
   function onSubmit() {
-    if (cultureId && props.newLatitude !== 0 && props.newLongitude !== 0) {
-      axios
-        .patch(`/api/cultures/${cultureId}`, {
-          description: description,
-          start_date: startYear,
-          end_date: lastYear,
-          source: sourceInfo,
-          locations_attributes: [
-            {
-              latitude: props.newLatitude,
-              longitude: props.newLongitude
-            }
-          ]
-        })
-        .then(response => {
-          console.log(response);
-        });
-    } else {
-      axios
-        .patch(`/api/cultures/${cultureId}`, {
-          description: description,
-          start_date: startYear,
-          end_date: lastYear,
-          source: sourceInfo
-        })
-        .then(response => {
-          console.log(response);
-        });
-    }
     axios
-      .post("/api/cultures", {
-        culture: {
+      .post("/api/culture_drafts", {
+        culture_draft: {
           name: cultureNameInput,
           description: description,
           start_date: startYear,
@@ -181,7 +152,8 @@ function InputForm(props) {
               latitude: props.newLatitude,
               longitude: props.newLongitude
             }
-          ]
+          ],
+          approved: false
         }
       })
       .then(response => {
