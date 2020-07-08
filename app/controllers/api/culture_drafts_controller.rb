@@ -1,7 +1,8 @@
 class Api::CultureDraftsController < ApplicationController
     
     def index
-        @culture_drafts = policy_scope(Culture_draft)
+        @culture_drafts = policy_scope(CultureDraft)
+        render json: @culture_drafts
       end
     
       def show

@@ -60,6 +60,7 @@ function NavBar(props) {
               Logout
             </Menu.Item>
           )}
+          <Menu.Item key="Admin">Admin Dashboard</Menu.Item>
         </Menu>
       </Row>
       <h2 className="login-status">{props.loggedInStatus}</h2>

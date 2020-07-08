@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import Cultures from "./Cultures.js";
 import InputForm from "./Form.js";
+import Admin from "./AdminDashboard.js";
 
 function infoContainer(props) {
   return (
@@ -25,6 +26,7 @@ function infoContainer(props) {
           newLongitude={props.newLongitude}
         />
       )}
+      <Admin />
     </div>
   );
 }

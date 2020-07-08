@@ -14,6 +14,7 @@ function App(props) {
   const [showLocateMarker, setShowLocateMarker] = useState(false);
   const [showCultureComponent, setShowCultureComponent] = useState(false);
   const [showFormComponent, setShowFormComponent] = useState(false);
+  const [showAdminComponent, setShowAdminComponent] = useState(false);
   const [cultureId, setCultureId] = useState();
   const [loggedInStatus, setLoggedInStatus] = useState("Not Logged In");
   const [loggedInUser, setUser] = useState();
@@ -156,6 +157,7 @@ function App(props) {
       <InfoContainer
         showCultureComponent={showCultureComponent}
         showFormComponent={showFormComponent}
+        showAdminComponent={showAdminComponent}
         cultureClickHandler={onCultureClick}
         radioClicked={radioClicked}
         locationRadioClicked={locationRadioClicked}
