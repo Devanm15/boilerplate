@@ -160,7 +160,7 @@ function App(props) {
       <InfoContainer
         showCultureComponent={showCultureComponent}
         showFormComponent={showFormComponent}
-        showAdminComponent={showAdminComponent}
+        // showAdminComponent={showAdminComponent}
         cultureClickHandler={onCultureClick}
         radioClicked={radioClicked}
         locationRadioClicked={locationRadioClicked}

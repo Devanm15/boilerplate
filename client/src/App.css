@@ -81,3 +81,29 @@ ul {
   cursor: pointer;
   font-weight: 700;
 }
+
+th {
+  border: solid;
+}
+
+tr {
+  border: solid;
+}
+
+.admin-table {
+  border: solid;
+}
+
+.modal-container {
+  display: flex;
+}
+
+.newCultureDraft {
+  float: left;
+  width: 100%;
+}
+
+.OldCultureInfo {
+  float: right;
+  width: 100%;
+}
