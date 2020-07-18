@@ -60,6 +60,9 @@ function App(props) {
           setLoggedInStatus("Logged In");
           setUser(response.data.user.username);
         }
+        if (response.data.user.admin) {
+          setShowAdminComponent(true);
+        }
       })
       .catch(error => {
         console.log("check login error", error);

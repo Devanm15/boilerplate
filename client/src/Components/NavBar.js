@@ -8,6 +8,7 @@ import User from "./User.js";
 function NavBar(props) {
   const [show, setModal] = useState(false);
   const [login, setShowLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(state => {
     {
@@ -31,6 +32,9 @@ function NavBar(props) {
   function handleSuccessfulAuth(data) {
     props.handleLogin(data);
     setModal(false);
+    if (data.user.admin) {
+      setIsAdmin(true);
+    }
   }
 
   function handleLogoutClick() {
@@ -60,7 +64,7 @@ function NavBar(props) {
               Logout
             </Menu.Item>
           )}
-          <Menu.Item key="Admin">Admin Dashboard</Menu.Item>
+          {isAdmin && <Menu.Item key="Admin">Admin Dashboard</Menu.Item>}
         </Menu>
       </Row>
       <h2 className="login-status">{props.loggedInStatus}</h2>

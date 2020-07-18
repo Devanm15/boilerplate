@@ -26,7 +26,7 @@ function infoContainer(props) {
           newLongitude={props.newLongitude}
         />
       )}
-      <Admin />
+      {props.showAdminComponent && <Admin />}
     </div>
   );
 }
