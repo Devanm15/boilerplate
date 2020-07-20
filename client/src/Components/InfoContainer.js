@@ -26,7 +26,9 @@ function infoContainer(props) {
           newLongitude={props.newLongitude}
         />
       )}
-      {props.showAdminComponent && <Admin />}
+      {props.showAdminComponent && (
+        <Admin currentCultures={props.cultures.cultures} />
+      )}
     </div>
   );
 }

@@ -4,26 +4,43 @@ import CultureDraftModal from "./CultureDraftModal.js";
 import { Button, Modal } from "antd";
 
 function Admin(props) {
-  const [cultureDraft, setCultureDrafts] = useState();
+  const [currentCultureDraft, setCurrentCultureDraft] = useState();
+  const [cultureDraftCultures, setCultureDraftCultures] = useState();
+  const [cultureDrafts, setCultureDrafts] = useState();
   const [show, setModal] = useState(false);
 
-  useEffect(
-    state => {
-      axios
-        .get("/api/culture_drafts/")
-        .then(response => {
-          setCultureDrafts(response.data);
-        })
-        .catch(error => {
-          console.log("No drafts loading", error);
+  useEffect(() => {
+    console.log("useEffect", props.currentCultures);
+    axios
+      .get("/api/culture_drafts/")
+      .then(response => {
+        const cultureDrafts = response.data;
+        let cultureDraftCultures = {};
+        cultureDrafts.forEach(cultureDraft => {
+          let currentCulture = props.currentCultures.find(
+            currentCulture => cultureDraft.name == currentCulture.name
+          );
+          cultureDraftCultures[cultureDraft.name] = currentCulture;
         });
-    },
-    [props]
-  );
+
+        console.log(cultureDraftCultures);
+        setCultureDraftCultures(cultureDraftCultures);
+        setCultureDrafts(cultureDrafts);
+      })
+      .catch(error => {
+        console.log("No drafts loading", error);
+      });
+  }, [props.currentCultures]);
 
   function showCultureDrafts() {
-    if (cultureDraft) {
-      return cultureDraft.map((cultureDraft, index) => {
+    if (cultureDrafts) {
+      return cultureDrafts.map((cultureDraft, index) => {
+        function showModal(e) {
+          console.log("click");
+          console.log(props.currentCultures);
+          setCurrentCultureDraft(cultureDraft);
+          setModal(true);
+        }
         if (cultureDraft.approved == false) {
           return (
             <div className="unapproved" key={index}>
@@ -60,9 +77,6 @@ function Admin(props) {
     }
   }
 
-  function showModal() {
-    setModal(true);
-  }
   function handleCancel() {
     setModal(false);
   }
@@ -82,7 +96,12 @@ function Admin(props) {
         className="draft_modal"
         width={1000}
       >
-        {<CultureDraftModal cultureDraft={cultureDraft} />}
+        {
+          <CultureDraftModal
+            cultureDraft={currentCultureDraft}
+            cultureDraftCultures={cultureDraftCultures}
+          />
+        }
       </Modal>
 
       {showCultureDrafts()}

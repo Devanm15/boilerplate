@@ -98,12 +98,16 @@ tr {
   display: flex;
 }
 
-.newCultureDraft {
-  float: left;
-  width: 100%;
+.draft-comparison {
+  display: flex;
 }
 
-.OldCultureInfo {
-  float: right;
+.oldCultureInfo {
+  float: left;
   width: 100%;
+  font: bold;
+}
+
+.newCultureDraft {
+  width: 80%;
 }
