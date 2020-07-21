@@ -15,6 +15,7 @@ function App(props) {
   const [showCultureComponent, setShowCultureComponent] = useState(false);
   const [showFormComponent, setShowFormComponent] = useState(false);
   const [showAdminComponent, setShowAdminComponent] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [cultureId, setCultureId] = useState();
   const [loggedInStatus, setLoggedInStatus] = useState("Not Logged In");
   const [loggedInUser, setUser] = useState();
@@ -56,12 +57,13 @@ function App(props) {
         withCredentials: true
       })
       .then(response => {
+        console.log(response.data);
         if (response.data.user.email === userEmail) {
           setLoggedInStatus("Logged In");
           setUser(response.data.user.username);
         }
         if (response.data.user.admin) {
-          setShowAdminComponent(true);
+          setIsAdmin(response.data.user.admin);
         }
       })
       .catch(error => {
@@ -72,7 +74,25 @@ function App(props) {
   function handleLogout() {
     setLoggedInStatus("Not Logged In");
     setUser();
+    setShowAdminComponent(false);
     Cookies.remove("email");
+  }
+
+  function adminLogin() {
+    axios
+      .get("http://localhost:3000/api/admin", {
+        withCredentials: true
+      })
+      .then(response => {
+        if (response.data.admin == true && showAdminComponent == false) {
+          setShowAdminComponent(true);
+        } else {
+          setShowAdminComponent(false);
+        }
+      })
+      .catch(error => {
+        console.log("No admin", error);
+      });
   }
 
   function handleCultureClick(e) {
@@ -132,6 +152,9 @@ function App(props) {
         handleLogin={handleLogin}
         handleLogout={handleLogout}
         username={loggedInUser}
+        showAdminComponent={showAdminComponent}
+        adminLogin={adminLogin}
+        isAdmin={isAdmin}
       />
       <div className="toggle-buttons">
         <Button>Discover Medicinal Plants</Button>
@@ -160,7 +183,7 @@ function App(props) {
       <InfoContainer
         showCultureComponent={showCultureComponent}
         showFormComponent={showFormComponent}
-        // showAdminComponent={showAdminComponent}
+        showAdminComponent={showAdminComponent}
         cultureClickHandler={onCultureClick}
         radioClicked={radioClicked}
         locationRadioClicked={locationRadioClicked}
