@@ -15,6 +15,7 @@ function App(props) {
   const [showCultureComponent, setShowCultureComponent] = useState(false);
   const [showFormComponent, setShowFormComponent] = useState(false);
   const [showAdminComponent, setShowAdminComponent] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [cultureId, setCultureId] = useState();
   const [loggedInStatus, setLoggedInStatus] = useState("Not Logged In");
   const [loggedInUser, setUser] = useState();
@@ -29,27 +30,28 @@ function App(props) {
           cultures: response.data
         });
       });
-      axios
-        .get("http://localhost:3000/api/logged_in", {
-          withCredentials: true
-        })
-        .then(response => {
-          if (response.data.user.email === userEmail) {
-            setLoggedInStatus("Logged In");
-            setUser(response.data.user.username);
-          } else {
-            setLoggedInStatus("Not Logged In");
-            setUser();
-          }
-        })
-        .catch(error => {
-          console.log("check login error", error);
-        });
     },
 
     [props]
   );
-
+  function checkLoginStatus() {
+    axios
+      .get("http://localhost:3000/api/logged_in", {
+        withCredentials: true
+      })
+      .then(response => {
+        if (response.data.logged_in && loggedInStatus === "Not Logged In") {
+          setLoggedInStatus("Logged In");
+          setUser(response.data.user.username);
+        } else if (!response.data.logged_in && loggedInStatus === "Logged In") {
+          setLoggedInStatus("Not Logged In");
+          setUser();
+        }
+      })
+      .catch(error => {
+        console.log("check login error", error);
+      });
+  }
   function handleLogin() {
     axios
       .get("http://localhost:3000/api/logged_in", {
@@ -61,7 +63,7 @@ function App(props) {
           setUser(response.data.user.username);
         }
         if (response.data.user.admin) {
-          setShowAdminComponent(true);
+          setIsAdmin(response.data.user.admin);
         }
       })
       .catch(error => {
@@ -69,10 +71,26 @@ function App(props) {
       });
   }
 
-  function handleLogout() {
+  function handleLogout(data) {
     setLoggedInStatus("Not Logged In");
     setUser();
+    setShowAdminComponent(false);
     Cookies.remove("email");
+    setIsAdmin(false);
+  }
+
+  function adminLogin() {
+    axios
+      .get("http://localhost:3000/api/admin", {
+        withCredentials: true
+      })
+      .then(response => {
+        if (response.data.admin == true && showAdminComponent == false) {
+          setShowAdminComponent(true);
+        } else {
+          setShowAdminComponent(false);
+        }
+      });
   }
 
   function handleCultureClick(e) {
@@ -132,6 +150,9 @@ function App(props) {
         handleLogin={handleLogin}
         handleLogout={handleLogout}
         username={loggedInUser}
+        showAdminComponent={showAdminComponent}
+        adminLogin={adminLogin}
+        isAdmin={isAdmin}
       />
       <div className="toggle-buttons">
         <Button>Discover Medicinal Plants</Button>
@@ -160,7 +181,7 @@ function App(props) {
       <InfoContainer
         showCultureComponent={showCultureComponent}
         showFormComponent={showFormComponent}
-        // showAdminComponent={showAdminComponent}
+        showAdminComponent={showAdminComponent}
         cultureClickHandler={onCultureClick}
         radioClicked={radioClicked}
         locationRadioClicked={locationRadioClicked}
@@ -169,6 +190,7 @@ function App(props) {
         newLatitude={newLatitude}
         newLongitude={newLongitude}
       />
+      {checkLoginStatus()}
     </div>
   );
 }

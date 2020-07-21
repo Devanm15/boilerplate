@@ -8,7 +8,6 @@ import User from "./User.js";
 function NavBar(props) {
   const [show, setModal] = useState(false);
   const [login, setShowLogin] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(state => {
     {
@@ -32,20 +31,21 @@ function NavBar(props) {
   function handleSuccessfulAuth(data) {
     props.handleLogin(data);
     setModal(false);
-    if (data.user.admin) {
-      setIsAdmin(true);
-    }
   }
 
   function handleLogoutClick() {
     axios
       .delete("http://localhost:3000/api/logout", { withCredentials: true })
       .then(response => {
-        props.handleLogout();
+        props.handleLogout(response);
+        setShowLogin(true);
       })
       .catch(error => {
         console.log("logout error", error);
       });
+  }
+  function handleAdminLogin(data) {
+    props.adminLogin(data);
   }
 
   return (
@@ -64,7 +64,11 @@ function NavBar(props) {
               Logout
             </Menu.Item>
           )}
-          {isAdmin && <Menu.Item key="Admin">Admin Dashboard</Menu.Item>}
+          {!login && props.isAdmin && (
+            <Menu.Item key="Admin" onClick={handleAdminLogin}>
+              Admin Dashboard
+            </Menu.Item>
+          )}
         </Menu>
       </Row>
       <h2 className="login-status">{props.loggedInStatus}</h2>
