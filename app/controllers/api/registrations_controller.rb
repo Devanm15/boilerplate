@@ -8,7 +8,7 @@ class Api::RegistrationsController < ApplicationController
             last_name: params['user']["last_name"],
             email: params['user']['email'],
             password: params['user']['password'],
-            password_confirmation: params['user']['password_confirmation'],
+            password_confirmation: params['user']['password_confirmation']
         )
 
         if user

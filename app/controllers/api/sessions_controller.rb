@@ -1,7 +1,8 @@
 class Api::SessionsController < ApplicationController
     
-    skip_after_action :verify_authorized, only: [:create, :logged_in, :logout]
+    skip_after_action :verify_authorized, only: [:create, :logged_in, :logout, :admin]
 
+  
     def create
         user = User.find_by(email: params["user"]["email"]).try(:authenticate, params["user"]["password"])
         if user
@@ -22,6 +23,7 @@ class Api::SessionsController < ApplicationController
                 logged_in: true, 
                 user: @current_user
             }
+        
         else
             render json: {
                 logged_in: false
@@ -34,4 +36,14 @@ class Api::SessionsController < ApplicationController
             status: 200, logged_out: true
         }
     end
+
+    def admin 
+        if @current_user.admin 
+            render json: {
+                admin: true,
+                # user: @current_user
+            }
+        end
+    end
+
 end
