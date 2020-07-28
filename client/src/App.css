@@ -73,3 +73,41 @@ ul {
 .Collapse {
   overflow: auto;
 }
+
+.suggestion-active,
+.suggestions li:hover {
+  background-color: rgb(228, 226, 226);
+  color: black;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+th {
+  border: solid;
+}
+
+tr {
+  border: solid;
+}
+
+.admin-table {
+  border: solid;
+}
+
+.modal-container {
+  display: flex;
+}
+
+.draft-comparison {
+  display: flex;
+}
+
+.oldCultureInfo {
+  float: left;
+  width: 100%;
+  font: bold;
+}
+
+.newCultureDraft {
+  width: 80%;
+}

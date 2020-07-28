@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Router, Redirect } from "react-router-dom";
 import {
   GoogleMap,
   LoadScript,
@@ -8,7 +7,6 @@ import {
 } from "@react-google-maps/api";
 // import Autocomplete from 'react-google-autocomplete';
 import Geocode from "react-geocode";
-import infoContainer from "./InfoContainer";
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 Geocode.enableDebug();
 
@@ -40,29 +38,49 @@ class Map extends Component {
     }
   }
 
+  renderLocateMarker() {
+    if (this.props.showLocateMarker == true) {
+      let locationMarker = (
+        <Marker
+          draggable={true}
+          position={{
+            lat: this.props.newLatitude,
+            lng: this.props.newLongitude
+          }}
+          icon={"https://img.icons8.com/pastel-glyph/32/000000/quill-pen.png"}
+          onDragEnd={e => this.props.getNewPosition(e)}
+          animation={google.maps.Animation.BOUNCE}
+        />
+      );
+      return locationMarker;
+    }
+  }
+
   render() {
     return (
-      // <div className="Map">
-      <LoadScript
-        id="script-loader"
-        googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}
-      >
-        <GoogleMap
-          id="my-map"
-          mapContainerStyle={{
-            height: "600px",
-            width: "100%"
-          }}
-          zoom={this.props.zoom}
-          center={{
-            lat: this.props.center.lat,
-            lng: this.props.center.lng
-          }}
-          zoomControl={false}
+      <div className="Map">
+        <LoadScript
+          id="script-loader"
+          googleMapsApiKey={`${process.env.REACT_APP_GOOGLE_API_KEY}`}
         >
-          {this.props.showCultureMarkers && this.renderMarkers()}
-        </GoogleMap>
-      </LoadScript>
+          <GoogleMap
+            id="my-map"
+            mapContainerStyle={{
+              height: "600px",
+              width: "100%"
+            }}
+            zoom={this.props.zoom}
+            center={{
+              lat: this.props.center.lat,
+              lng: this.props.center.lng
+            }}
+            zoomControl={false}
+          >
+            {this.props.showCultureMarkers && this.renderMarkers()}
+            {this.renderLocateMarker()}
+          </GoogleMap>
+        </LoadScript>
+      </div>
     );
   }
 }

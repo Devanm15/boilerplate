@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from "js-cookie";
 import { Button, Checkbox } from "antd";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -19,6 +20,7 @@ function UserLogin(props) {
         { withCredentials: true }
       )
       .then(response => {
+        Cookies.set("email", data.email, { expires: 365 });
         if (response.data.logged_in) {
           props.handleSuccessfulAuth(response.data);
         }

@@ -13,7 +13,7 @@ function UserRegistration(props) {
         "http://localhost:3000/api/registrations",
         {
           user: {
-            first_name: data.firsName,
+            first_name: data.firstName,
             last_name: data.lastName,
             username: data.username,
             email: data.email,

@@ -37,11 +37,15 @@ function NavBar(props) {
     axios
       .delete("http://localhost:3000/api/logout", { withCredentials: true })
       .then(response => {
-        props.handleLogout();
+        props.handleLogout(response);
+        setShowLogin(true);
       })
       .catch(error => {
         console.log("logout error", error);
       });
+  }
+  function handleAdminLogin(data) {
+    props.adminLogin(data);
   }
 
   return (
@@ -58,6 +62,11 @@ function NavBar(props) {
           {!login && (
             <Menu.Item key="logout" onClick={handleLogoutClick}>
               Logout
+            </Menu.Item>
+          )}
+          {!login && props.isAdmin && (
+            <Menu.Item key="Admin" onClick={handleAdminLogin}>
+              Admin Dashboard
             </Menu.Item>
           )}
         </Menu>

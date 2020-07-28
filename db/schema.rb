@@ -10,16 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_11_000108) do
+ActiveRecord::Schema.define(version: 2020_07_21_035133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "culture_drafts", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "start_date"
+    t.integer "end_date"
+    t.string "source"
+    t.boolean "approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "latitude"
+    t.float "longitude"
+  end
 
   create_table "cultures", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source"
+    t.integer "start_date"
+    t.integer "end_date"
   end
 
   create_table "cultures_locations", id: false, force: :cascade do |t|
@@ -44,6 +60,7 @@ ActiveRecord::Schema.define(version: 2020_05_11_000108) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin", default: false
   end
 
 end
