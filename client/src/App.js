@@ -58,6 +58,7 @@ function App(props) {
         withCredentials: true
       })
       .then(response => {
+        console.log(response.data);
         if (response.data.user.email === userEmail) {
           setLoggedInStatus("Logged In");
           setUser(response.data.user.username);
@@ -90,6 +91,23 @@ function App(props) {
         } else {
           setShowAdminComponent(false);
         }
+      });
+  }
+
+  function adminLogin() {
+    axios
+      .get("http://localhost:3000/api/admin", {
+        withCredentials: true
+      })
+      .then(response => {
+        if (response.data.admin == true && showAdminComponent == false) {
+          setShowAdminComponent(true);
+        } else {
+          setShowAdminComponent(false);
+        }
+      })
+      .catch(error => {
+        console.log("No admin", error);
       });
   }
 
