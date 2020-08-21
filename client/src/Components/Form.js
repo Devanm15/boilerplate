@@ -182,7 +182,7 @@ function InputForm(props) {
           form={form}
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h3>Which databse would you like to contribute to?</h3>
+          <h3>Which database would you like to contribute to?</h3>
           <Form.Item label="Contribute To:">
             <Radio.Group onChange={culturePlantSelect}>
               <Radio.Button value="Cultures">Cultures</Radio.Button>
@@ -213,23 +213,20 @@ function InputForm(props) {
             <Radio.Group required={true} onChange={radioClicked}>
               {cultureLatitude && (
                 <div className="location-display">
-                  <p>
-                    <Radio
-                      value="location-coordinates"
-                      onChange={handleChange}
-                    />
+                  <Radio value="location-coordinates" onChange={handleChange}>
                     These are the coordinates we have saved in the database does
                     this look right to you?
-                  </p>
-                  <p>Latitude:{cultureLatitude}</p>
-                  <p>Longitude:{cultureLongitude}</p>
+                    <p>Latitude:{cultureLatitude}</p>
+                    <p>Longitude:{cultureLongitude}</p>
+                  </Radio>
                 </div>
               )}
               <div>
-                <Radio value="suggest-map" onChange={handleChange} />
-                Click here to select the location on the map:
-                <p>Latitude:{props.newLatitude}</p>
-                <p>Longitude:{props.newLongitude}</p>
+                <Radio value="suggest-map" onChange={handleChange}>
+                  Click here to select the location on the map:
+                  <p>Latitude:{props.newLatitude}</p>
+                  <p>Longitude:{props.newLongitude}</p>
+                </Radio>
               </div>
             </Radio.Group>
           </Form.Item>
