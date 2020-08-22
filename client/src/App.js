@@ -40,9 +40,11 @@ function App(props) {
         withCredentials: true
       })
       .then(response => {
+        console.log(response);
         if (response.data.logged_in && loggedInStatus === "Not Logged In") {
           setLoggedInStatus("Logged In");
           setUser(response.data.user.username);
+          setIsAdmin(response.data.user.admin);
         } else if (!response.data.logged_in && loggedInStatus === "Logged In") {
           setLoggedInStatus("Not Logged In");
           setUser();
@@ -63,9 +65,6 @@ function App(props) {
           setLoggedInStatus("Logged In");
           setUser(response.data.user.username);
         }
-        if (response.data.user.admin) {
-          setIsAdmin(response.data.user.admin);
-        }
       })
       .catch(error => {
         console.log("check login error", error);
@@ -78,20 +77,6 @@ function App(props) {
     setShowAdminComponent(false);
     Cookies.remove("email");
     setIsAdmin(false);
-  }
-
-  function adminLogin() {
-    axios
-      .get("http://localhost:3000/api/admin", {
-        withCredentials: true
-      })
-      .then(response => {
-        if (response.data.admin == true && showAdminComponent == false) {
-          setShowAdminComponent(true);
-        } else {
-          setShowAdminComponent(false);
-        }
-      });
   }
 
   function adminLogin() {
