@@ -17,4 +17,10 @@ RSpec.describe User, type: :model do
     user = User.new(username: "test", first_name: "test", last_name: "test", email:"test@me.ca", password:"345")
     expect(user).to be_invalid 
   end
+  it "is not valid without username" do
+    user = User.new( first_name: "test", last_name: "test", email:"test@me.ca", password:"34543211")
+    expect(user).to be_invalid
+  end
+  
+ 
 end
