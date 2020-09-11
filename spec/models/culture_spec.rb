@@ -12,5 +12,9 @@ RSpec.describe Culture, type: :model do
     culture = Culture.new(name: "test", source: "")
     expect(culture).to be_invalid 
   end
+
+  describe "it should accept nested attributes for locations" do
+    it{ should accept_nested_attributes_for :locations }
+  end
   
 end
