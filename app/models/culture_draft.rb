@@ -3,6 +3,5 @@ class CultureDraft < ApplicationRecord
     validates_associated :locations
     validates :name, presence: true
     validates :source, presence: true 
-  
-    # accepts_nested_attributes_for :locations
+
 end
