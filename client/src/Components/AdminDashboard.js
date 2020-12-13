@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CultureDraftModal from "./CultureDraftModal.js";
+import newCultureDraftModal from "./newCultureDraftModal.js";
 import { Button, Modal } from "antd";
 
 function Admin(props) {
   const [currentCultureDraft, setCurrentCultureDraft] = useState();
   const [cultureDraftCultures, setCultureDraftCultures] = useState();
   const [cultureDrafts, setCultureDrafts] = useState();
+  const [cultureDraftId, setCultureDraftId] = useState();
   const [show, setModal] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect", props.currentCultures);
     axios
       .get("/api/culture_drafts/")
       .then(response => {
@@ -36,8 +37,6 @@ function Admin(props) {
     if (cultureDrafts) {
       return cultureDrafts.map((cultureDraft, index) => {
         function showModal(e) {
-          console.log("click");
-          console.log(props.currentCultures);
           setCurrentCultureDraft(cultureDraft);
           setModal(true);
         }
@@ -51,7 +50,6 @@ function Admin(props) {
                       <th>Culture Name</th>
                       <th>New Additions</th>
                       <th>Created At</th>
-                      <th>Approve</th>
                     </tr>
                     <tr>
                       <td>{cultureDraft.name}</td>
@@ -61,11 +59,6 @@ function Admin(props) {
                         </Button>
                       </td>
                       <td>{cultureDraft.created_at}</td>
-
-                      <td>
-                        <Button>Approve</Button>
-                        <Button>Decline</Button>
-                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -85,27 +78,29 @@ function Admin(props) {
   }
 
   return (
-    <div>
-      <h1>Hello Admin</h1>
-      <h4>These are the new additions to the app</h4>
-      <Modal
-        visible={show}
-        onCancel={handleCancel}
-        onOk={handleOk}
-        destroyOnClose={true}
-        className="draft_modal"
-        width={1000}
-      >
-        {
+    console.log("admin props", props.currentCultures),
+    (
+      <div>
+        <h1>Hello Admin</h1>
+        <h4>These are the new additions to the app</h4>
+        <Modal
+          visible={show}
+          onCancel={handleCancel}
+          onOk={handleOk}
+          destroyOnClose={true}
+          className="draft_modal"
+          width={1000}
+        >
           <CultureDraftModal
-            cultureDraft={currentCultureDraft}
+            currentCultureDraft={currentCultureDraft}
             cultureDraftCultures={cultureDraftCultures}
           />
-        }
-      </Modal>
+          <newCultureDraftModal currentCultureDraft={currentCultureDraft} />
+        </Modal>
 
-      {showCultureDrafts()}
-    </div>
+        {showCultureDrafts()}
+      </div>
+    )
   );
 }
 export default Admin;

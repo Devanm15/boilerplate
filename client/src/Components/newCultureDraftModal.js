@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Input, Form } from "antd";
 
-function CultureDraftModal(props) {
+function newCultureDraftModal(props) {
   const [newCultureDraft, setNewCultureDraft] = useState({
     name: "",
     description: "",
@@ -24,12 +24,12 @@ function CultureDraftModal(props) {
   const [longitude, setLongitude] = useState();
 
   const [completeCultureDraft, setCompleteCultureDraft] = useState({
-    name: correspondingCulture.name,
-    description: correspondingCulture.description,
-    location: correspondingCulture.location,
-    start_date: correspondingCulture.start_date,
-    end_date: correspondingCulture.end_date,
-    source: correspondingCulture.source
+    name: "",
+    description: "",
+    location: "",
+    start_date: "",
+    end_date: "",
+    source: ""
   });
 
   const { TextArea } = Input;
@@ -251,4 +251,4 @@ function CultureDraftModal(props) {
   );
 }
 
-export default CultureDraftModal;
+export default newCultureDraftModal;
