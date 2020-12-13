@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do # /api/data
     get '/index', to: 'cultures#index'
     root 'cultures#index'
-    resources :cultures, :locations, only: [:index, :show]
+    resources :cultures, :locations, only: [:index, :show, :update]
     resources :cultures do 
       resources :locations, only: [:create]
     end
-    resources :culture_drafts, only: [:index, :create]
+    resources :culture_drafts, only: [:index, :create, :destroy, :update]
     resources  :sessions, only: [:create]
     resources :registrations, only: [:create]
     delete :logout, to: "sessions#logout"
