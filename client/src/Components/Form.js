@@ -153,7 +153,7 @@ function InputForm(props) {
         }
       })
       .then(response => {
-        console.log(response);
+        console.log("this is the response", response);
       });
   }
 
@@ -206,7 +206,7 @@ function InputForm(props) {
               className="ant-input"
               type="text"
               onChange={handleDescriptionInput}
-              maxLength={140}
+              maxLength={500}
             />
           </Form.Item>
           <Form.Item label="Location" required>

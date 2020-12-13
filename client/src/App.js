@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+
 import "./App.css";
 import "antd/dist/antd.css";
+
 import MapContainer from "./Components/MapContainer.js";
 import InfoContainer from "./Components/InfoContainer.js";
 import Navbar from "./Components/NavBar.js";
+import Admin from "./Components/AdminDashboard.js";
 import { Button } from "antd";
 
 function App(props) {
@@ -40,7 +43,6 @@ function App(props) {
         withCredentials: true
       })
       .then(response => {
-        console.log(response);
         if (response.data.logged_in && loggedInStatus === "Not Logged In") {
           setLoggedInStatus("Logged In");
           setUser(response.data.user.username);
@@ -180,19 +182,21 @@ function App(props) {
         newLongitude={newLongitude}
         showFormComponent={showFormComponent}
       />
-
-      <InfoContainer
-        showCultureComponent={showCultureComponent}
-        showFormComponent={showFormComponent}
-        showAdminComponent={showAdminComponent}
-        cultureClickHandler={onCultureClick}
-        radioClicked={radioClicked}
-        locationRadioClicked={locationRadioClicked}
-        loggedInStatus={loggedInStatus}
-        cultures={cultures}
-        newLatitude={newLatitude}
-        newLongitude={newLongitude}
-      />
+      {showAdminComponent || (
+        <InfoContainer
+          showCultureComponent={showCultureComponent}
+          showFormComponent={showFormComponent}
+          showAdminComponent={showAdminComponent}
+          cultureClickHandler={onCultureClick}
+          radioClicked={radioClicked}
+          locationRadioClicked={locationRadioClicked}
+          loggedInStatus={loggedInStatus}
+          cultures={cultures}
+          newLatitude={newLatitude}
+          newLongitude={newLongitude}
+        />
+      )}
+      {showAdminComponent && <Admin currentCultures={cultures.cultures} />}
       {checkLoginStatus()}
     </div>
   );

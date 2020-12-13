@@ -1,5 +1,5 @@
 class Api::CulturesController < ApplicationController
-  before_action :set_culture, only: [:show, :edit, :destroy]
+  before_action :set_culture, only: [:show, :update, :destroy]
 
   
   def index
@@ -17,7 +17,6 @@ class Api::CulturesController < ApplicationController
   end 
 
   def update
-    @culture = Culture.find params[:id]
     @culture.update! update_params
 
     authorize @culture
