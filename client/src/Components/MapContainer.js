@@ -10,6 +10,7 @@ function MapContainer(props) {
     let allCultures = props.cultures.cultures;
     if (allCultures) {
       allCultures.map(culture => {
+        console.log(culture);
         if (
           culture.id !== Number(props.cultureId) &&
           latitude == culture.locations[0].latitude

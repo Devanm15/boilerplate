@@ -172,29 +172,33 @@ function App(props) {
         <Button>Discover Endangered Plant Species</Button>
         <Button onClick={() => handleFormClick()}>Add to the App!</Button>
       </div>
-      <MapContainer
-        showCultureMarkers={showCultureMarkers}
-        showLocateMarker={showLocateMarker}
-        cultureId={cultureId}
-        cultures={cultures}
-        getNewPosition={getNewPosition}
-        newLatitude={newLatitude}
-        newLongitude={newLongitude}
-        showFormComponent={showFormComponent}
-      />
+
       {showAdminComponent || (
-        <InfoContainer
-          showCultureComponent={showCultureComponent}
-          showFormComponent={showFormComponent}
-          showAdminComponent={showAdminComponent}
-          cultureClickHandler={onCultureClick}
-          radioClicked={radioClicked}
-          locationRadioClicked={locationRadioClicked}
-          loggedInStatus={loggedInStatus}
-          cultures={cultures}
-          newLatitude={newLatitude}
-          newLongitude={newLongitude}
-        />
+        <div>
+          <MapContainer
+            showCultureMarkers={showCultureMarkers}
+            showLocateMarker={showLocateMarker}
+            cultureId={cultureId}
+            cultures={cultures}
+            getNewPosition={getNewPosition}
+            newLatitude={newLatitude}
+            newLongitude={newLongitude}
+            showFormComponent={showFormComponent}
+          />
+
+          <InfoContainer
+            showCultureComponent={showCultureComponent}
+            showFormComponent={showFormComponent}
+            showAdminComponent={showAdminComponent}
+            cultureClickHandler={onCultureClick}
+            radioClicked={radioClicked}
+            locationRadioClicked={locationRadioClicked}
+            loggedInStatus={loggedInStatus}
+            cultures={cultures}
+            newLatitude={newLatitude}
+            newLongitude={newLongitude}
+          />
+        </div>
       )}
       {showAdminComponent && <Admin currentCultures={cultures.cultures} />}
       {checkLoginStatus()}

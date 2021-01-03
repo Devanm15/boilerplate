@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CultureDraftModal from "./CultureDraftModal.js";
-import newCultureDraftModal from "./newCultureDraftModal.js";
+import NewCultureDraftModal from "./NewCultureDraftModal.js";
 import { Button, Modal } from "antd";
 
 function Admin(props) {
@@ -9,22 +9,24 @@ function Admin(props) {
   const [cultureDraftCultures, setCultureDraftCultures] = useState();
   const [cultureDrafts, setCultureDrafts] = useState();
   const [cultureDraftId, setCultureDraftId] = useState();
-  const [show, setModal] = useState(false);
+  const [showModal, setModal] = useState(false);
+  const [showNewCulture, setShowNewCulture] = useState(false);
 
   useEffect(() => {
     axios
       .get("/api/culture_drafts/")
       .then(response => {
         const cultureDrafts = response.data;
+
         let cultureDraftCultures = {};
         cultureDrafts.forEach(cultureDraft => {
           let currentCulture = props.currentCultures.find(
             currentCulture => cultureDraft.name == currentCulture.name
           );
+
           cultureDraftCultures[cultureDraft.name] = currentCulture;
         });
 
-        console.log(cultureDraftCultures);
         setCultureDraftCultures(cultureDraftCultures);
         setCultureDrafts(cultureDrafts);
       })
@@ -38,8 +40,13 @@ function Admin(props) {
       return cultureDrafts.map((cultureDraft, index) => {
         function showModal(e) {
           setCurrentCultureDraft(cultureDraft);
-          setModal(true);
+          if (!cultureDraftCultures[cultureDraft.name]) {
+            setShowNewCulture(true);
+          } else {
+            setModal(true);
+          }
         }
+
         if (cultureDraft.approved == false) {
           return (
             <div className="unapproved" key={index}>
@@ -72,35 +79,43 @@ function Admin(props) {
 
   function handleCancel() {
     setModal(false);
+    setShowNewCulture(false);
   }
   function handleOk() {
     setModal(false);
+    setShowNewCulture(false);
   }
 
   return (
-    console.log("admin props", props.currentCultures),
-    (
-      <div>
-        <h1>Hello Admin</h1>
-        <h4>These are the new additions to the app</h4>
-        <Modal
-          visible={show}
-          onCancel={handleCancel}
-          onOk={handleOk}
-          destroyOnClose={true}
-          className="draft_modal"
-          width={1000}
-        >
-          <CultureDraftModal
-            currentCultureDraft={currentCultureDraft}
-            cultureDraftCultures={cultureDraftCultures}
-          />
-          <newCultureDraftModal currentCultureDraft={currentCultureDraft} />
-        </Modal>
+    <div>
+      <h1>Hello Admin</h1>
+      <h4>These are the new additions to the app</h4>
+      <Modal
+        visible={showModal}
+        onCancel={handleCancel}
+        onOk={handleOk}
+        destroyOnClose={true}
+        className="draft_modal"
+        width={1000}
+      >
+        <CultureDraftModal
+          currentCultureDraft={currentCultureDraft}
+          cultureDraftCultures={cultureDraftCultures}
+        />
+      </Modal>
+      <Modal
+        visible={showNewCulture}
+        onCancel={handleCancel}
+        onOk={handleOk}
+        destroyOnClose={true}
+        className="draft_modal"
+        width={1000}
+      >
+        <NewCultureDraftModal currentCultureDraft={currentCultureDraft} />
+      </Modal>
 
-        {showCultureDrafts()}
-      </div>
-    )
+      {showCultureDrafts()}
+    </div>
   );
 }
 export default Admin;

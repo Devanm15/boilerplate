@@ -12,6 +12,8 @@ class Api::CulturesController < ApplicationController
 
   def create
    @culture = Culture.create create_params
+
+   
     
     authorize @culture
   end 
@@ -34,8 +36,8 @@ class Api::CulturesController < ApplicationController
       :id,
       :name,
       :description,
-      # :start_date,
-      # :end_date,
+      :start_date,
+      :end_date,
       :source,
       locations_attributes: [:latitude, :longitude]
     )

@@ -98,12 +98,13 @@ tr {
   display: flex;
 }
 
-/* .oldCultureInfo {
+.oldCultureInfo {
   float: left;
   width: 100%;
-  margin-left: 10em;
+  margin-left: 24em;
   font-weight: bold;
-} */
+  font-size: 20px;
+}
 
 .newCultureDraft {
   width: 67em;
@@ -113,8 +114,12 @@ tr {
   width: max;
 }
 
-.cultureDraft {
+.cultureDraft.existingCulture {
   width: 50%;
   float: left;
+  padding: 2%;
+}
+
+.cultureDraft.newCulture {
   padding: 2%;
 }

@@ -104,7 +104,7 @@ function CultureDraftModal(props) {
   function showCultureDrafts() {
     return (
       <div className="CultureDraftBox">
-        <div className="cultureDraft newCultureInfo">
+        <div className="cultureDraft existingCulture">
           <h3>New Culture Information</h3>
           <form name="form" onSubmit={approve}>
             <Form.Item label="Name" className="newCultureEntry">
@@ -128,9 +128,15 @@ function CultureDraftModal(props) {
 
             <Form.Item label="Location" className="newCultureEntry">
               <Input
-                className="Location"
-                name="location"
-                defaultValue={currentCultureLocation}
+                className="Latitude"
+                name="culture[locations_attributes][0][latitude]"
+                defaultValue={props.currentCultureDraft.latitude}
+                onChange={onChange}
+              ></Input>
+              <Input
+                className="Longitude"
+                name="culture[locations_attributes][0][longitude]"
+                defaultValue={props.currentCultureDraft.longitude}
                 onChange={onChange}
               ></Input>
             </Form.Item>
@@ -167,14 +173,9 @@ function CultureDraftModal(props) {
         </div>
 
         <div className="cultureDraft existingCultureData">
-          {/* {!correspondingCulture ? ( */}
-          <h3 className="oldCultureInfo">
-            This is the first draft for this culture!
-          </h3>
-          {/* ) : ( */}
           <div>
             <h3 className="oldCultureInfo">Existing Culture Information</h3>
-            {/* )} */}
+
             <form onSubmit={formSubmit} name="form">
               <Form.Item label="Name" className="newCultureEntry">
                 <Input
@@ -197,14 +198,18 @@ function CultureDraftModal(props) {
               </Form.Item>
 
               <Form.Item label="Location" className="newCultureEntry">
-                <div>{correspondingCulture.locations[0].latitude}</div>
-                {/* <Input
-                    className="Location"
-                    name="culture[location]"
-                    value={latitude}
-                    onChange={onCompleteformChange}
-                  ></Input>*/}
-                {/* {console.log(correspondingCulture.locations[0].latitude)} */}
+                <Input
+                  className="Latitude"
+                  name="culture[locations_attributes][0][latitude]"
+                  defaultValue={correspondingCulture.locations[0].latitude}
+                  onChange={onChange}
+                ></Input>
+                <Input
+                  className="Longitude"
+                  name="culture[locations_attributes][0][longitude]"
+                  defaultValue={correspondingCulture.locations[0].longitude}
+                  onChange={onChange}
+                ></Input>
               </Form.Item>
 
               <Form.Item label="Start_date" className="newCultureEntry">
@@ -237,7 +242,6 @@ function CultureDraftModal(props) {
               <button type="submit">Submit</button>
             </form>
           </div>
-          {/* )} */}
         </div>
       </div>
     );

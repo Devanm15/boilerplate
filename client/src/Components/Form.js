@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Radio, DatePicker } from "antd";
+import { Form, Input, Button, Radio, DatePicker, Alert } from "antd";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
@@ -19,16 +19,19 @@ function InputForm(props) {
   const { RangePicker } = DatePicker;
   const { handleSubmit, errors } = useForm();
   const [form] = Form.useForm();
+  const [culture_plant, set_culture_plant] = useState("");
 
   function culturePlantSelect(e) {
     let newCultureList = [];
     if (e.target.value === "Cultures") {
+      set_culture_plant(e.target.value);
       props.cultures.cultures.map(cultures => {
         newCultureList.push((name = cultures.name));
       });
       setCultureNameList(newCultureList);
     }
     if (e.target.value === "Plants") {
+      set_culture_plant(e.target.value);
     }
   }
 
@@ -153,6 +156,10 @@ function InputForm(props) {
         }
       })
       .then(response => {
+        <Alert
+          message={`thanks for adding to the ${culture_plant} database!`}
+          type="info"
+        />;
         console.log("this is the response", response);
       });
   }
