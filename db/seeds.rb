@@ -14,28 +14,33 @@
 
 cultures_params = [{ name: 'Inuit',
                       description: 'Still collecting resources at this time.',
+                      source:"Wikipedia",
                       locations_attributes: [{ latitude: 66.616223, longitude: -94.641224 }]
                     },
                     {
                       name:  "Navajo",
                         description: "Still collecting resources at this time.",
+                        source:"Wikipedia",
                         locations_attributes: [{ latitude: 35.889202, longitude: -109.637477 }]
                     },
                     {
                       name:  "Celtic",
                         description: "Still collecting resources at this time.",
+                        source:"Wikipedia",
                         locations_attributes: [{ latitude:  54.084000,
                                                 longitude:  -2.620073 }]
                     },
                     {
                       name:  "Saami",
                         description: "Still collecting resources at this time.",
+                        source:"Wikipedia",
                         locations_attributes: [{ latitude:  69.956541,
                                                 longitude:  25.190607 }]
                     },
                     {
                       name:  "Pigmy",
                         description: "Still collecting resources at this time.",
+                        source:"Wikipedia",
                         locations_attributes: [{ latitude:  -1.734690,
                                                 longitude:  16.304982 }]
                     }]
