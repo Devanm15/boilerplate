@@ -174,9 +174,8 @@ function CultureDraftModal(props) {
 
         <div className="cultureDraft existingCultureData">
           <div>
-            <h3 className="oldCultureInfo">Existing Culture Information</h3>
-
             <form onSubmit={formSubmit} name="form">
+              <h3>Existing Culture Information</h3>
               <Form.Item label="Name" className="newCultureEntry">
                 <Input
                   className="Name"

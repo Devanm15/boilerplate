@@ -3,5 +3,7 @@ class CultureDraft < ApplicationRecord
     # validates_associated :locations
     validates :name, presence: true
     validates :source, presence: true 
+    # belongs_to :users
+    # validates_associated :users 
 
 end

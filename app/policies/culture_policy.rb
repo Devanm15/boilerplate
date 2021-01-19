@@ -12,16 +12,16 @@ class CulturePolicy < ApplicationPolicy
    end
 
    def create?
-    true
+    @user && @user.admin? 
    end
 
    def update?
-    true
+    @user.admin?
    end
 
   class Scope < Scope
-    def resolve 
-      scope.all 
+    def resolve
+      scope.all
     end
   end
 end 

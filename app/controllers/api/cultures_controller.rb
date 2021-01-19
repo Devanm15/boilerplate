@@ -8,20 +8,20 @@ class Api::CulturesController < ApplicationController
   end
 
   def show
+   authorize @cultures
+    render json: @cultures, include: :locations
   end
 
   def create
    @culture = Culture.create create_params
-
-   
-    
     authorize @culture
   end 
 
   def update
+    authorize @culture
     @culture.update! update_params
 
-    authorize @culture
+    # authorize @culture
   end
 
   private
