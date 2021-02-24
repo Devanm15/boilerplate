@@ -75,7 +75,7 @@ RSpec.describe "Api::CultureDrafts", type: :request do
              patch "/api/culture_drafts/#{@culture_draft_params[:id]}", :params => {"culture_draft" => culture_draft_update_params }
              @culture_draft_params.reload
            
-            expect(@culture_draft_params.description).to_not eq "this is changing"
+            expect(@culture_draft_params.longitude).to eq 0
             expect(@culture_draft_params.name).to eq "culture_draft"
           end 
       end  
