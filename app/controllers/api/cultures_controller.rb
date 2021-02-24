@@ -13,15 +13,15 @@ class Api::CulturesController < ApplicationController
   end
 
   def create
-   @culture = Culture.create create_params
+   @culture = Culture.create(create_params) 
     authorize @culture
+  
   end 
 
   def update
+    @culture.update update_params 
     authorize @culture
-    @culture.update! update_params
-
-    # authorize @culture
+   
   end
 
   private

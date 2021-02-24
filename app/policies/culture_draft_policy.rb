@@ -12,11 +12,11 @@ class CultureDraftPolicy < ApplicationPolicy
    end
 
    def create?
-    true
+    @user
    end
 
    def update?
-    true
+    @user && @user.admin?
    end
 
   class Scope < Scope

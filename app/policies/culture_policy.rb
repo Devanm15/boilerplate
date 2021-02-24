@@ -16,7 +16,7 @@ class CulturePolicy < ApplicationPolicy
    end
 
    def update?
-    @user.admin?
+    @user && @user.admin?
    end
 
   class Scope < Scope

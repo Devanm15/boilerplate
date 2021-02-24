@@ -9,8 +9,8 @@ class Api::CultureDraftsController < ApplicationController
       end
     
       def create
-        @culture_draft = CultureDraft.create create_params
-        authorize @culture_draft
+         @culture_draft = CultureDraft.create create_params
+          authorize @culture_draft
       end 
     
       def update

@@ -200,7 +200,9 @@ function App(props) {
           />
         </div>
       )}
-      {showAdminComponent && <Admin currentCultures={cultures.cultures} />}
+      {/* {showAdminComponent &&  */}
+      <Admin currentCultures={cultures.cultures} />
+      {/* } */}
       {checkLoginStatus()}
     </div>
   );

@@ -1,26 +1,57 @@
 require 'rails_helper'
 
 RSpec.describe Api::CulturesController, type: :controller do
-    describe "POST /api/cultures" do 
-        before do  
-            @user = create(:user)
-            session[:user_id] = @user.id
-        end
-        it "with valid params it creates a culture" do
-            culture_params = { "culture"=>{"name"=>"15", "description"=>"", "locations_attributes"=>[{"latitude"=>0, "longitude"=>1}], "start_date"=>"", "end_date"=>"", "source"=>"admin"}}
+    before do  
+        location_params = attributes_for(:location)
+        @culture_params = attributes_for(:culture, locations_attributes: [location_params])
         
-        expect { post :create, :params => culture_params }.to change(Culture, :count).by(1)
-        expect Culture.count == 2
-        # expect(response).to have_http_status(:created)
+        @user = create(:admin)
+        session[:user_id] = @user.id
     end
+ 
+    describe "GET #index" do
+        it "renders a json of all cultures and locations" do
+            location_params = attributes_for(:location)
+            @culture_params = attributes_for(:culture, locations_attributes: [location_params])
+            get :index
+
+            expect(response).to have_http_status(200)
+            expect(JSON.parse(response.body)).to eq([])
+        end
+        
     end
 
-    describe "with valid params it updates a culture" do
-        it "with valid params it updates a culture" do
-        culture_update_params = {"culture"=>{"id"=>"1", "name"=>"15", "description"=>"", "locations_attributes"=>[{"latitude"=>0, "longitude"=>1}], "start_date"=>"", "end_date"=>"", "source"=>"admin"}}
-        
-        
-        expect(response).to have_http_status(:ok)
+    describe "GET #show" do 
+        it "renders a json of all cultures and locations" do
+        location_params = attributes_for(:location)
+            @culture_params = attributes_for(:culture, locations_attributes: [location_params])
+            get :index
+
+            expect(response).to have_http_status(200)
+            expect(JSON.parse(response.body)).to eq([])
+        end
     end
+
+    describe "POST #create, /api/cultures" do 
+        context "with valid params" do
+            it "creates a new culture in the database" do
+                expect { post :create, :params => { "culture" => @culture_params } }.to change(Culture, :count).by(1)
+            end
+        end
+        
+        context "with invalid params" do
+            it "does not create a new culture in the database" do
+                @culture_params = attributes_for(:invalid_culture)
+                expect { post :create, :params => { "culture" => @culture_params} }.to_not change(Culture, :count)
+            end
+           
+        end
+        context "without locations attibutes" do
+            it "does not create a new culture in the database" do 
+                @culture_params = attributes_for(:culture)
+                expect { post :create, :params => { "culture" => @culture_params} }.to_not change(Culture, :count)
+            end
+        end    
     end
+
 end

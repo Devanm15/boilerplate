@@ -41,14 +41,14 @@ function CultureDraftModal(props) {
       for (var pair of cultureDataApproved.entries()) {
         console.log("pair", pair[0] + ", " + pair[1]);
       }
-      console.log("corresponding", correspondingCulture);
+      // console.log("corresponding", correspondingCulture);
       axios
         .put(`/api/cultures/${correspondingCulture.id}`, cultureDataApproved)
         .then(response => {
           console.log("this is the response", response);
         });
     }
-    console.log("newCulture", newCultureDraft);
+    // console.log("newCulture", newCultureDraft);
   }
   function onChange(e) {
     setNewCultureDraft({ [e.target.name]: e.target.value });
