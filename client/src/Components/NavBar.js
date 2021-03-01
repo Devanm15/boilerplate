@@ -48,40 +48,52 @@ function NavBar(props) {
     props.adminLogin(data);
   }
 
-  return (
-    <div className="Menu">
-      <Row>
-        <h1>Earth Medicine App</h1>
+  function handleUserLogin(data) {
+    props.userLogin(data);
+  }
 
-        <Menu mode="horizontal">
-          {login && (
-            <Menu.Item key="login" onClick={showModal}>
-              Login | Register
-            </Menu.Item>
-          )}
-          {!login && (
-            <Menu.Item key="logout" onClick={handleLogoutClick}>
-              Logout
-            </Menu.Item>
-          )}
-          {!login && props.isAdmin && (
-            <Menu.Item key="Admin" onClick={handleAdminLogin}>
-              Admin Dashboard
-            </Menu.Item>
-          )}
-        </Menu>
-      </Row>
-      <h2 className="login-status">{props.loggedInStatus}</h2>
-      <h2 className="nav-username">{props.username}</h2>
-      <Modal
-        visible={show}
-        onCancel={handleCancel}
-        onOk={handleOk}
-        destroyOnClose={true}
-      >
-        {<User handleSuccessfulAuth={handleSuccessfulAuth} />}
-      </Modal>
-    </div>
+  return (
+    console.log(props),
+    (
+      <div className="Menu">
+        <Row>
+          <h1>Earth Medicine App</h1>
+
+          <Menu mode="horizontal">
+            {login && (
+              <Menu.Item key="login" onClick={showModal}>
+                Login | Register
+              </Menu.Item>
+            )}
+            {!login && (
+              <Menu.Item key="logout" onClick={handleLogoutClick}>
+                Logout
+              </Menu.Item>
+            )}
+            {!login && props.isAdmin && (
+              <Menu.Item key="Admin" onClick={handleAdminLogin}>
+                Admin Dashboard
+              </Menu.Item>
+            )}
+            {!login && props.isUser && (
+              <Menu.Item key="User" onClick={handleUserLogin}>
+                User Dashboard
+              </Menu.Item>
+            )}
+          </Menu>
+        </Row>
+        <h2 className="login-status">{props.loggedInStatus}</h2>
+        <h2 className="nav-username">{props.username}</h2>
+        <Modal
+          visible={show}
+          onCancel={handleCancel}
+          onOk={handleOk}
+          destroyOnClose={true}
+        >
+          {<User handleSuccessfulAuth={handleSuccessfulAuth} />}
+        </Modal>
+      </div>
+    )
   );
 }
 

@@ -1,6 +1,6 @@
 class Api::SessionsController < ApplicationController
     
-    skip_after_action :verify_authorized, only: [:create, :logged_in, :logout, :admin]
+    skip_after_action :verify_authorized, only: [:create, :logged_in, :logout, :admin, :user]
 
   
     def create

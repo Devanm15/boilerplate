@@ -9,6 +9,7 @@ import MapContainer from "./Components/MapContainer.js";
 import InfoContainer from "./Components/InfoContainer.js";
 import Navbar from "./Components/NavBar.js";
 import Admin from "./Components/AdminDashboard.js";
+import UserDashboard from "./Components/UserDashboard.js";
 import { Button } from "antd";
 
 function App(props) {
@@ -18,10 +19,13 @@ function App(props) {
   const [showCultureComponent, setShowCultureComponent] = useState(false);
   const [showFormComponent, setShowFormComponent] = useState(false);
   const [showAdminComponent, setShowAdminComponent] = useState(false);
+  const [showUserComponent, setShowUserComponent] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isUser, setIsUser] = useState(false);
   const [cultureId, setCultureId] = useState();
   const [loggedInStatus, setLoggedInStatus] = useState("Not Logged In");
-  const [loggedInUser, setUser] = useState();
+  const [loggedInUser, setLoggedInUser] = useState();
+  const [user, setUser] = useState();
   const [newLatitude, setNewLatitude] = useState(0);
   const [newLongitude, setNewLongitude] = useState(0);
   let userEmail = Cookies.get("email");
@@ -43,12 +47,16 @@ function App(props) {
         withCredentials: true
       })
       .then(response => {
+        console.log(response);
         if (response.data.logged_in && loggedInStatus === "Not Logged In") {
           setLoggedInStatus("Logged In");
-          setUser(response.data.user.username);
+          setUser(response.data.user);
+          setLoggedInUser(response.data.user.username);
+          setIsUser(!response.data.user.admin);
           setIsAdmin(response.data.user.admin);
         } else if (!response.data.logged_in && loggedInStatus === "Logged In") {
           setLoggedInStatus("Not Logged In");
+          setLoggedInUser();
           setUser();
         }
       })
@@ -65,7 +73,8 @@ function App(props) {
         console.log(response.data);
         if (response.data.user.email === userEmail) {
           setLoggedInStatus("Logged In");
-          setUser(response.data.user.username);
+          setLoggedInUser(response.data.user.username);
+          setUser(response.data.user);
         }
       })
       .catch(error => {
@@ -75,10 +84,17 @@ function App(props) {
 
   function handleLogout(data) {
     setLoggedInStatus("Not Logged In");
+    setLoggedInUser();
     setUser();
     setShowAdminComponent(false);
+    setShowUserComponent(false);
     Cookies.remove("email");
     setIsAdmin(false);
+    setIsUser(false);
+  }
+
+  function userLogin() {
+    setShowUserComponent(!showUserComponent);
   }
 
   function adminLogin() {
@@ -87,6 +103,7 @@ function App(props) {
         withCredentials: true
       })
       .then(response => {
+        console.log(response);
         if (response.data.admin == true && showAdminComponent == false) {
           setShowAdminComponent(true);
         } else {
@@ -156,8 +173,11 @@ function App(props) {
         handleLogout={handleLogout}
         username={loggedInUser}
         showAdminComponent={showAdminComponent}
+        showUserComponent={showUserComponent}
         adminLogin={adminLogin}
+        userLogin={userLogin}
         isAdmin={isAdmin}
+        isUser={isUser}
       />
       <div className="toggle-buttons">
         <Button>Discover Medicinal Plants</Button>
@@ -190,6 +210,7 @@ function App(props) {
             showCultureComponent={showCultureComponent}
             showFormComponent={showFormComponent}
             showAdminComponent={showAdminComponent}
+            showUserComponent={showUserComponent}
             cultureClickHandler={onCultureClick}
             radioClicked={radioClicked}
             locationRadioClicked={locationRadioClicked}
@@ -200,9 +221,15 @@ function App(props) {
           />
         </div>
       )}
-      {/* {showAdminComponent &&  */}
-      <Admin currentCultures={cultures.cultures} />
-      {/* } */}
+      {showAdminComponent && <Admin currentCultures={cultures.cultures} />}
+      {showUserComponent && (
+        <UserDashboard
+          isUser={isUser}
+          user={user}
+          isAdmin={isAdmin}
+          loggedInUser={loggedInUser}
+        />
+      )}
       {checkLoginStatus()}
     </div>
   );

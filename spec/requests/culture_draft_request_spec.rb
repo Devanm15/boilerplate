@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Api::CultureDrafts", type: :request do
     before do 
-      # @location_params = attributes_for(:location)
       @culture_draft_params = attributes_for(:culture_draft)
       @user = create(:user)
       login(@user)
@@ -41,13 +40,6 @@ RSpec.describe "Api::CultureDrafts", type: :request do
           end
       
       end
-  
-      # context "without locations" do
-      #     it "does not create a new culture_draft in the database" do 
-      #         @culture_draft_params = attributes_for(:culture_draft)
-      #         expect { post "/api/culture_drafts#create", :params => { "culture_draft" => @culture_draft_params} }.to_not change(CultureDraft, :count)
-      #     end
-      # end  
     end
    
     describe "PUT #update, /api/culture_drafts/id" do
@@ -59,8 +51,8 @@ RSpec.describe "Api::CultureDrafts", type: :request do
         
         it "updates a culture_draft in the database" do
           @culture_draft_params = create(:culture_draft)
-            culture_update_draft_params = attributes_for(:culture_draft_update)
-             patch "/api/culture_drafts/#{@culture_draft_params[:id]}", :params => {"culture_draft" => culture_update_draft_params }
+            culture_draft_update_params = attributes_for(:culture_draft_update)
+             patch "/api/culture_drafts/#{@culture_draft_params[:id]}", :params => {"culture_draft" => culture_draft_update_params }
              @culture_draft_params.reload
            
             expect(@culture_draft_params.longitude).to eq 1
@@ -68,16 +60,6 @@ RSpec.describe "Api::CultureDrafts", type: :request do
         end
       end
   
-      context "with invalid params" do
-          it "does not update a culture_draft in the database" do
-            @culture_draft_params = create(:culture_draft)
-            culture_draft_update_params = attributes_for(:culture_draft_update)
-             patch "/api/culture_drafts/#{@culture_draft_params[:id]}", :params => {"culture_draft" => culture_draft_update_params }
-             @culture_draft_params.reload
-           
-            expect(@culture_draft_params.longitude).to eq 0
-            expect(@culture_draft_params.name).to eq "culture_draft"
-          end 
-      end  
+      
     end
 end
