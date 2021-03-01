@@ -27,14 +27,7 @@ RSpec.describe "Api::Cultures", type: :request do
 
   
   describe "POST #create, /api/cultures" do 
-    # context "without admin" do
-    #   it "does not create a new culture in the database" do
-    #     @user = create(:user)
-    #     login(@user)
-    #       expect { post "/api/cultures#create", :params => { "culture" => @culture_params} }.to_not change(Culture, :count)
-    #   end
-  
-  end
+ 
     context "with valid params" do
       it "creates a new culture in the database" do
           expect { post "/api/cultures#create", :params => { "culture" => @culture_params} }.to change(Culture, :count).by(1)
