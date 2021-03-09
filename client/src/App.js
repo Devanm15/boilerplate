@@ -10,7 +10,7 @@ import InfoContainer from "./Components/InfoContainer.js";
 import Navbar from "./Components/NavBar.js";
 import Admin from "./Components/AdminDashboard.js";
 import UserDashboard from "./Components/UserDashboard.js";
-import { Button } from "antd";
+import { Button, message } from "antd";
 
 function App(props) {
   const [cultures, setCultures] = useState([]);
@@ -30,24 +30,20 @@ function App(props) {
   const [newLongitude, setNewLongitude] = useState(0);
   let userEmail = Cookies.get("email");
 
-  useEffect(
-    state => {
-      axios.get("/api/index/").then(response => {
-        setCultures({
-          cultures: response.data
-        });
+  useEffect(() => {
+    axios.get("/api/index/").then(response => {
+      setCultures({
+        cultures: response.data
       });
-    },
+    });
+  }, [props]);
 
-    [props]
-  );
   function checkLoginStatus() {
     axios
       .get("http://localhost:3000/api/logged_in", {
         withCredentials: true
       })
       .then(response => {
-        console.log(response);
         if (response.data.logged_in && loggedInStatus === "Not Logged In") {
           setLoggedInStatus("Logged In");
           setUser(response.data.user);
@@ -70,7 +66,6 @@ function App(props) {
         withCredentials: true
       })
       .then(response => {
-        console.log(response.data);
         if (response.data.user.email === userEmail) {
           setLoggedInStatus("Logged In");
           setLoggedInUser(response.data.user.username);
@@ -103,7 +98,6 @@ function App(props) {
         withCredentials: true
       })
       .then(response => {
-        console.log(response);
         if (response.data.admin == true && showAdminComponent == false) {
           setShowAdminComponent(true);
         } else {
@@ -211,6 +205,7 @@ function App(props) {
             showFormComponent={showFormComponent}
             showAdminComponent={showAdminComponent}
             showUserComponent={showUserComponent}
+            user={user}
             cultureClickHandler={onCultureClick}
             radioClicked={radioClicked}
             locationRadioClicked={locationRadioClicked}

@@ -39,7 +39,8 @@ class Api::CultureDraftsController < ApplicationController
           :source,
           :approved,
           :latitude, 
-          :longitude
+          :longitude,
+          :user_id
         )
       end
 
@@ -47,7 +48,8 @@ class Api::CultureDraftsController < ApplicationController
         params.require(:culture_draft).permit(
           :approved,
           :latitude, 
-          :longitude
+          :longitude,
+          user_attributes: [:user_id]
         )
       end
     

@@ -152,7 +152,8 @@ function InputForm(props) {
           source: sourceInfo,
           latitude: props.newLatitude,
           longitude: props.newLongitude,
-          approved: false
+          approved: false,
+          user_id: props.user.id
         }
       })
       .then(response => {

@@ -3,6 +3,8 @@ class User < ApplicationRecord
     validates_uniqueness_of :email, scope: :username
     validates :password, presence: true, length: {minimum: 8}
     validates :username, presence: true, uniqueness: {case_sensitive: false, message: "This username has already been used"}
+
+    has_many :culture_drafts 
     has_secure_password
 
    

@@ -4,4 +4,5 @@ class CultureDraft < ApplicationRecord
     validates :longitude, presence: true
     validates :name, presence: true
     validates :source, presence: true 
+    belongs_to :user 
 end
