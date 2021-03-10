@@ -28,6 +28,9 @@ function App(props) {
   const [user, setUser] = useState();
   const [newLatitude, setNewLatitude] = useState(0);
   const [newLongitude, setNewLongitude] = useState(0);
+  const [cultureDraftCultures, setCultureDraftCultures] = useState();
+  const [cultureDrafts, setCultureDrafts] = useState();
+  const [userCultureDrafts, setUserCultureDrafts] = useState([]);
   let userEmail = Cookies.get("email");
 
   useEffect(() => {
@@ -37,6 +40,27 @@ function App(props) {
       });
     });
   }, [props]);
+
+  function get_drafts(user) {
+    axios
+      .get("/api/culture_drafts/")
+      .then(response => {
+        const cultureDrafts = response.data;
+        cultureDrafts.forEach(cultureDraft => {
+          if (user.id === cultureDraft.user_id) {
+            setUserCultureDrafts(userCultureDrafts => [
+              ...userCultureDrafts,
+              cultureDraft
+            ]);
+          }
+        });
+        setCultureDraftCultures(cultureDraftCultures);
+        setCultureDrafts(cultureDrafts);
+      })
+      .catch(error => {
+        console.log("No drafts loading", error);
+      });
+  }
 
   function checkLoginStatus() {
     axios
@@ -50,6 +74,8 @@ function App(props) {
           setLoggedInUser(response.data.user.username);
           setIsUser(!response.data.user.admin);
           setIsAdmin(response.data.user.admin);
+
+          get_drafts(response.data.user);
         } else if (!response.data.logged_in && loggedInStatus === "Logged In") {
           setLoggedInStatus("Not Logged In");
           setLoggedInUser();
@@ -223,6 +249,7 @@ function App(props) {
           user={user}
           isAdmin={isAdmin}
           loggedInUser={loggedInUser}
+          userCultureDrafts={userCultureDrafts}
         />
       )}
       {checkLoginStatus()}
